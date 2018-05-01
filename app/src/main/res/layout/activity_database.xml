@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="event"
+            type="com.semicolon.scientificresearch.EventListener.Events"/>
+    </data>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    tools:context="com.semicolon.scientificresearch.Activities.EfadaOrderActivity">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/ko7ly"
+                app:contentInsetEnd="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="56dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/back"
+                        android:padding="12dp"
+                        android:clickable="true"
+                        android:onClick="@{event::onClickListener}"
+                        android:layout_alignParentLeft="true"
+
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="قواعد البيانات"
+                        />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/prev"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:background="@drawable/database_yellow"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="@{event::onClickListener}"
+
+
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="مكتبة الملك فهد"
+                android:textSize="15sp"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="حيث يقوم الباحث بالبحث في المكتبة الوطنيه بالرياض ومكتبة الكونجرس للتحقق من إيجاز موضوع البحث"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/order"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:background="@drawable/database_blue"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="@{event.onClickListener}"
+
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="المكتبة الرقمية السعودية"
+                android:textSize="15sp"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="حيث يقوم الباحث بالبحث في المكتبة الوطنيه بالرياض ومكتبة الكونجرس للتحقق من إيجاز موضوع البحث"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+</layout>

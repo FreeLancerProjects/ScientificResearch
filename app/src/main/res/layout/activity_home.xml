@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="event"
+            type="com.semicolon.scientificresearch.EventListener.Events"/>
+    </data>
+<ScrollView
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.semicolon.scientificresearch.Activities.HomeActivity"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            >
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/ko7ly"
+                app:contentInsetEnd="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="باحث"
+                        />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="130dp"
+            android:src="@drawable/logo"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:id="@+id/btn_aenat"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/aena"
+                android:gravity="center"
+                android:text="العينات"
+                android:paddingLeft="30dp"
+                android:textStyle="bold"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+                />
+            <Button
+                android:id="@+id/btn_db"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/database"
+                android:textStyle="bold"
+                android:text="قواعد البيانات"
+                android:gravity="center"
+                android:paddingRight="35dp"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+
+            >
+            <Button
+                android:id="@+id/btn_trans"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/translate"
+                android:gravity="center"
+                android:text="ترجمة"
+                android:paddingLeft="30dp"
+                android:textStyle="bold"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+
+                />
+            <Button
+                android:id="@+id/btn_train"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/trane"
+                android:textStyle="bold"
+                android:text="تدريب"
+                android:gravity="center"
+                android:paddingRight="35dp"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+
+            >
+            <Button
+                android:id="@+id/btn_control"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/control"
+                android:gravity="center"
+                android:text="تحكيم"
+                android:paddingLeft="30dp"
+                android:textStyle="bold"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+
+                />
+            <Button
+                android:id="@+id/btn_tad"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/td2e2"
+                android:textStyle="bold"
+                android:text="تدقيق"
+                android:gravity="center"
+                android:paddingRight="35dp"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:padding="5dp"
+            >
+            <Button
+                android:id="@+id/btn_t7"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/spss"
+                android:gravity="center"
+                android:text="تحليل احصائي"
+                android:paddingLeft="35dp"
+                android:textStyle="bold"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+
+                />
+            <Button
+                android:id="@+id/btn_tawf"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/twfe2"
+                android:textStyle="bold"
+                android:text="التوثيق"
+                android:gravity="center"
+                android:paddingRight="35dp"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+
+                />
+
+
+        </LinearLayout>
+       <!-- <Button
+            android:id="@+id/btn_eqtbas"
+
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/aena"
+            android:textStyle="bold"
+            android:text="الإقتباس"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:onClick="@{event::onClickListener}"
+
+            />-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:id="@+id/btn_eqtbas"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/aena"
+                android:gravity="center"
+                android:text="إقتباس"
+                android:paddingLeft="30dp"
+                android:textStyle="bold"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+                />
+            <Button
+                android:id="@+id/btn_service"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/database"
+                android:textStyle="bold"
+                android:text="خدمات"
+                android:gravity="center"
+                android:paddingRight="35dp"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="12sp"
+
+
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
+</layout>

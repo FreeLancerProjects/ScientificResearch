@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="event"
+            type="com.semicolon.scientificresearch.EventListener.Events"/>
+    </data>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true"
+    android:background="@color/ko7ly"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo"
+            android:padding="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/container"
+            />
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        >
+
+        <EditText
+            android:id="@+id/user_name"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:hint="إسم المستخدم أو البريد الالكتروني"
+            android:textSize="12sp"
+            android:background="@drawable/login_ed_bg"
+            android:drawableRight="@drawable/user_name_dark"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            />
+
+        <EditText
+            android:id="@+id/user_password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:hint="كلمة المرور"
+            android:textSize="12sp"
+            android:drawableRight="@drawable/user_pass_dark"
+            android:background="@drawable/login_ed_bg"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/login_ed_bg"
+            android:textColor="@color/ko7ly"
+            android:text="تسجيل الدخول"
+            android:textStyle="bold"
+            android:onClick="@{event::onClickListener}"
+
+            />
+
+
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/skip"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="تخطي"
+            android:textSize="18sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:onClick="@{event::onClickListener}"
+
+            />
+        <TextView
+            android:id="@+id/create_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="جديد"
+            android:textSize="18sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:onClick="@{event::onClickListener}"
+
+            />
+    </RelativeLayout>
+
+</ScrollView>
+
+</layout>

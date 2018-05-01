@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="event"
+            type="com.semicolon.scientificresearch.EventListener.Events"/>
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:fillViewport="true"
+        android:background="@color/ko7ly"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                >
+
+                <Spinner
+                    android:id="@+id/user_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    app:backgroundTint="@color/white"
+                    >
+
+                </Spinner>
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/user_name"
+                    android:hint="الاسم الاول والاخير"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="12sp"
+                    app:backgroundTint="@color/white" />
+
+
+
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="البريد الإلكتروني"
+                        android:textSize="12sp"
+                        android:paddingLeft="10dp"
+                        android:drawableRight="@drawable/user_email"
+                        android:drawablePadding="10dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:backgroundTint="@color/white"
+
+                        />
+
+
+                <com.lamudi.phonefield.PhoneInputLayout
+                    android:id="@+id/user_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+
+                    >
+
+                </com.lamudi.phonefield.PhoneInputLayout>
+
+                    <EditText
+                        android:id="@+id/country"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="الدولة"
+                        android:textSize="12sp"
+                        android:paddingLeft="10dp"
+                        android:drawableRight="@drawable/user_country"
+                        android:drawablePadding="10dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:backgroundTint="@color/white"
+
+                        />
+
+                <Spinner
+                    android:id="@+id/type"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="15dp"
+                    app:backgroundTint="@color/white"
+                    >
+
+                </Spinner>
+
+                    <EditText
+                        android:id="@+id/organization"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="المؤسسة"
+                        android:textSize="12sp"
+                        android:paddingLeft="10dp"
+                        android:drawablePadding="10dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:drawableRight="@drawable/user_organization"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:backgroundTint="@color/white"
+
+
+                        />
+                <EditText
+                    android:id="@+id/speciality"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="التخصص"
+                    android:textSize="12sp"
+                    android:paddingLeft="10dp"
+                    android:drawablePadding="10dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableRight="@drawable/user_spec"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white"
+
+
+                    />
+                <EditText
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="اسم المستخدم"
+                    android:textSize="12sp"
+                    android:paddingLeft="10dp"
+                    android:drawableRight="@drawable/user_name"
+                    android:drawablePadding="10dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white"
+
+                    />
+
+                <EditText
+                    android:id="@+id/user_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="كلمة المرور"
+                    android:inputType="textPassword"
+                    android:textSize="12sp"
+                    android:paddingLeft="10dp"
+                    android:drawableRight="@drawable/user_pass"
+                    android:drawablePadding="10dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white"
+
+                    />
+                <Button
+                    android:id="@+id/create_account"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/login_ed_bg"
+                    android:textColor="@color/ko7ly"
+                    android:text="إنشاء حساب"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="@{event::onClickListener}"
+
+                    />
+
+                <TextView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:text="تسجيل دخول"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:onClick="@{event.onClickListener}"
+
+                    android:layout_marginTop="10dp"
+
+
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</layout>

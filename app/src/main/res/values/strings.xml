@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ScientificResearch</string>
+    <array name="user_type">
+        <item>محلل إحصائي</item>
+        <item>باحث علمي</item>
+        <item>محكم</item>
+        <item>مدقق</item>
+
+    </array>
+
+    <array name="type">
+        <item>دكتور</item>
+        <item>معيد</item>
+        <item>محاضر</item>
+        <item>استاذ</item>
+        <item>استاذ مساعد</item>
+        <item>استاذ مشارك</item>
+
+    </array>
+</resources>
