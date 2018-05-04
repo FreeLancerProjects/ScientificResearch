@@ -51,6 +51,7 @@
                     android:padding="12dp"
                     android:clickable="true"
                     android:onClick="@{event::onClickListener}"
+                    android:layout_alignParentLeft="true"
 
                     />
                 <TextView

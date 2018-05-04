@@ -15,7 +15,9 @@
         >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layoutDirection="ltr"
+            >
 
 
             <LinearLayout
@@ -218,17 +220,17 @@
                 <TextView
                     android:id="@+id/back"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:text="تسجيل دخول"
-                    android:textSize="18sp"
+                    android:layout_height="22dp"
                     android:layout_marginBottom="30dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:onClick="@{event.onClickListener}"
-
                     android:layout_marginTop="10dp"
+                    android:onClick="@{event.onClickListener}"
+                    android:text="تسجيل دخول"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+
+                    android:textStyle="bold"
 
 
                     />

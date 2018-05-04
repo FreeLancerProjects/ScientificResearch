@@ -15,6 +15,7 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 public class TranslateActivity extends AppCompatActivity implements Events{
 
     private ActivityTranslateBinding translateBinding;
+    private String user_type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +23,18 @@ public class TranslateActivity extends AppCompatActivity implements Events{
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"JannaLT-Regular.ttf",true);
         translateBinding.setEvent(this);
+        getDataFromIntent();
     }
-
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent!=null)
+        {
+            if (intent.hasExtra("user_type"))
+            {
+                user_type = intent.getStringExtra("user_type");
+            }
+        }
+    }
     @Override
     public void onClickListener(View view) {
         int id = view.getId();
@@ -35,6 +46,7 @@ public class TranslateActivity extends AppCompatActivity implements Events{
                 break;
             case R.id.paidTransBtn:
                 Intent intent1 = new Intent(TranslateActivity.this,TadqeqActivity.class);
+                intent1.putExtra("user_type",user_type);
                 startActivity(intent1);
                 break;
             case R.id.back:

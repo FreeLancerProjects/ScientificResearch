@@ -64,6 +64,7 @@
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -71,35 +72,46 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/upload_td"
             />
-        <TextView
+        <LinearLayout
+            android:id="@+id/sel_file"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="إضغط هنا لتحميل الملف"
+            android:orientation="vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="70dp"
             android:layout_marginBottom="10dp"
-
-
-            />
-        <TextView
-            android:id="@+id/file_name"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/mo3dla_bg"
-            android:textSize="12sp"
-            android:gravity="center_vertical"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:singleLine="true"
             android:clickable="true"
             android:onClick="@{event.onClickListener}"
-            android:textColor="@color/ko7ly"
 
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="إضغط هنا لتحميل الملف"
+                android:layout_marginBottom="5dp"
+                android:clickable="false"
+                android:longClickable="false"
 
-            />
+                />
+            <TextView
+                android:id="@+id/file_name"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+
+                android:background="@drawable/mo3dla_bg"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/ko7ly"
+                android:clickable="false"
+                android:longClickable="false"
+
+                />
+        </LinearLayout>
+
         <Button
             android:id="@+id/upload_btn"
             android:layout_width="130dp"

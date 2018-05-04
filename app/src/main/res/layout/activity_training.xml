@@ -10,17 +10,9 @@
             name="event"
             type="com.semicolon.scientificresearch.EventListener.Events"/>
     </data>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.semicolon.scientificresearch.Activities.TrainingActivity"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true"
-    >
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
         <android.support.design.widget.AppBarLayout
@@ -63,70 +55,22 @@
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="2"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            >
-            <FrameLayout
-                android:layout_width="140dp"
-                android:layout_height="200dp"
-                android:background="@drawable/blue_tr"
-                android:layout_marginRight="20dp"
-                >
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:text="طلب دورة تدريبية"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    />
-            </FrameLayout>
-            <FrameLayout
-                android:layout_width="140dp"
-                android:layout_height="200dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/yelow_tr"
-                >
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:text="طلب إستشارة"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    />
-            </FrameLayout>
-        </LinearLayout>
+
         <FrameLayout
-            android:layout_width="140dp"
-            android:layout_height="200dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/red_tr"
-            android:layout_gravity="center_horizontal"
-            >
-            <TextView
-                android:layout_width="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+            <ProgressBar
+                android:id="@+id/progBar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="الدورات السابقة"
-                android:textSize="16sp"
-                android:gravity="center"
                 />
         </FrameLayout>
     </LinearLayout>
-</ScrollView>
 </layout>

@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layoutDirection="ltr"
         >
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
@@ -27,6 +28,7 @@
             android:layout_alignParentTop="true"
             >
             <android.support.v7.widget.Toolbar
+                android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/ko7ly"
@@ -34,6 +36,9 @@
                 app:contentInsetRight="0dp"
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+
                 >
                 <RelativeLayout
                     android:layout_width="match_parent"

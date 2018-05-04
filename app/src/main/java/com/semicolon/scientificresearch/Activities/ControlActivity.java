@@ -1,31 +1,41 @@
 package com.semicolon.scientificresearch.Activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.semicolon.scientificresearch.EventListener.Events;
 import com.semicolon.scientificresearch.Models.ResponseModel;
 import com.semicolon.scientificresearch.Models.UserModel;
 import com.semicolon.scientificresearch.R;
 import com.semicolon.scientificresearch.Services.Api;
 import com.semicolon.scientificresearch.Services.Services;
+import com.semicolon.scientificresearch.Services.Tags;
 import com.semicolon.scientificresearch.SingleTone.UserSingleTone;
 import com.semicolon.scientificresearch.databinding.ActivityControlBinding;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +56,10 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
     private UserModel userModel;
     private UserSingleTone userSingleTone;
     private String encodedFile;
+    private String exten;
+    private  FilePickerDialog filePickerDialog;
+    private String user_type;
+    private AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +67,25 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
 
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"JannaLT-Regular.ttf",true);
-        userSingleTone = UserSingleTone.getInstance();
-        userSingleTone.GetUserData(this);
         controlBinding.setEvent(this);
-
+        getDataFromIntent();
         CreateProgDialog();
+        CreateAlertDialog();
     }
-
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent!=null)
+        {
+            if (intent.hasExtra("user_type"))
+            {
+                user_type = intent.getStringExtra("user_type");
+            }else
+                {
+                    userSingleTone = UserSingleTone.getInstance();
+                    userSingleTone.GetUserData(this);
+                }
+        }
+    }
     private void CreateProgDialog()
     {
         ProgressBar bar = new ProgressBar(this);
@@ -72,26 +98,63 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
         dialog.setCancelable(true);
 
     }
+    private void CreateAlertDialog() {
+        alertDialog = new AlertDialog.Builder(this)
+                .setMessage("هذه الخدمة غير متاحة للزائرين عليك بإنشاء حساب وتسجيل الدخول")
+                .setPositiveButton("إغلاق", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        alertDialog.dismiss();
+                        finish();
+
+                    }
+                }).setCancelable(false).create();
+    }
     @Override
     public void onClickListener(View view) {
 
         int id = view.getId();
         switch (id)
         {
-            case R.id.control_file:
-                SelectFile();
+            case R.id.sel_file:
+                if (user_type.equals(Tags.visitor))
+                {
+                    alertDialog.show();
+
+                }else
+                {
+                    SelectFile();
+
+                }
                 break;
             case R.id.upload_btn:
-                upload_file();
+                if (user_type.equals(Tags.visitor))
+                {
+                    alertDialog.show();
+
+                }else
+                {
+                    upload_file();
+
+                }
                 break;
             case R.id.back:
                 finish();
                 break;
+
         }
     }
     private void upload_file() {
+        if (encodedFile!=null &&!TextUtils.isEmpty(encodedFile))
+        {
+
+        }else
+            {
+                Toast.makeText(this, "إختر الملف", Toast.LENGTH_LONG).show();
+            }
         dialog.show();
         Map<String,String> map = new HashMap<>();
+        Log.e("user_id",userModel.getUser_id());
         map.put("user_id_fk",userModel.getUser_id());
         map.put("requested_file",encodedFile);
         Log.e("file",encodedFile);
@@ -121,38 +184,67 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
         });    }
 
     private void SelectFile() {
-        String[] mimeTypes =
-                {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
-                        "application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-                        "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-                        "text/plain",
-                        "application/pdf",
-                        "application/zip"};
+        String [] exten = {"doc","docx"};
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+        properties.root = new File(DialogConfigs.DEFAULT_DIR);
+        properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = new File(DialogConfigs.DEFAULT_DIR);
+        properties.extensions = exten;
+
+        filePickerDialog = new FilePickerDialog(this,properties);
+        filePickerDialog.setTitle("Select file");
+        filePickerDialog.setDialogSelectionListener(new DialogSelectionListener() {
+            @Override
+            public void onSelectedFilePaths(String[] files) {
+                Log.e("file",files[0]+"");
+                String filePath = files[0];
+                controlBinding.controlFile.setText(filePath);
+                File file = new File(filePath);
+                try {
+                    InputStream inputStream = new FileInputStream(file);
+                    enCodeFile(inputStream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        filePickerDialog.show();
+
+        /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            intent.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
-            if (mimeTypes.length > 0) {
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-            }
-        } else {
-            String mimeTypesStr = "";
-            for (String mimeType : mimeTypes) {
-                mimeTypesStr += mimeType + "|";
-            }
-            intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
-        }
-        startActivityForResult(intent.createChooser(intent,"إختر الملف"),FILE_REQ);
+        intent.setType("file/*");
+        startActivityForResult(intent.createChooser(intent,"إختر الملف"),FILE_REQ);*/
     }
-
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(filePickerDialog!=null)
+                    {   //Show dialog if the read permission has been granted.
+                        filePickerDialog.show();
+
+                    }
+                }
+                else {
+                    //Permission has not been granted. Notify the user.
+                    Toast.makeText(ControlActivity.this,"Permission is Required for getting list of files",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FILE_REQ && resultCode == RESULT_OK && data != null)
         {
+
             Uri uri = data.getData();
+            exten = getContentResolver().getType(uri);
+            Log.e("type",exten);
             try {
                 enCodeFile(getContentResolver().openInputStream(uri));
                 controlBinding.controlFile.setText(String.valueOf(uri));
@@ -163,7 +255,7 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
             Log.e("uri",uri.toString()+"");
         }
     }
-
+*/
     private void enCodeFile(InputStream inputStream)
     {
         ByteArrayOutputStream outputStream=null;

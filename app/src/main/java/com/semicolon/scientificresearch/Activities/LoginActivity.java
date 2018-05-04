@@ -19,7 +19,9 @@ import com.semicolon.scientificresearch.EventListener.Events;
 import com.semicolon.scientificresearch.Models.UserModel;
 import com.semicolon.scientificresearch.R;
 import com.semicolon.scientificresearch.Services.Api;
+import com.semicolon.scientificresearch.Services.Preferences;
 import com.semicolon.scientificresearch.Services.Services;
+import com.semicolon.scientificresearch.Services.Tags;
 import com.semicolon.scientificresearch.SingleTone.UserSingleTone;
 import com.semicolon.scientificresearch.databinding.ActivityLoginBinding;
 
@@ -38,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements Events{
     private ActivityLoginBinding loginBinding;
     private UserSingleTone userSingleTone;
     private ProgressDialog dialog;
+    private Preferences preferences;
+    private String session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +50,27 @@ public class LoginActivity extends AppCompatActivity implements Events{
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"JannaLT-Regular.ttf",true);
         loginBinding.setEvent(this);
-        ////////////////////////////////////////
         userSingleTone = UserSingleTone.getInstance();
+
+        ////////////////////////////////////////
+        preferences = new Preferences(this);
+        session = preferences.getSession();
+        if (session!=null&&!TextUtils.isEmpty(session))
+        {
+            if (session.equals(Tags.Login_seeion))
+            {
+                UserModel userModel = preferences.GetUserData();
+                if (userModel!=null)
+                {
+                    userSingleTone.SetUserData(userModel);
+                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
+
+            }
+        }
         CreateProgDialog();
 
         if (Locale.getDefault().equals("ar"))
@@ -70,7 +93,10 @@ public class LoginActivity extends AppCompatActivity implements Events{
                 break;
             case R.id.skip:
                 Intent intent = new Intent(this,HomeActivity.class);
+                intent.putExtra("user_type",Tags.visitor);
                 startActivity(intent);
+                break;
+
             case R.id.create_account:
                 Intent intent2 = new Intent(this,RegisterActivity.class);
                 startActivity(intent2);
@@ -123,15 +149,17 @@ public class LoginActivity extends AppCompatActivity implements Events{
                         if (response.isSuccessful())
                         {
                             UserModel userModel = response.body();
+                            Log.e("mssage",userModel.getMessage()+"");
                             if (userModel.getMessage()==1)
                             {
+                                preferences.CreateSharedPref(userModel);
                                 userSingleTone.SetUserData(userModel);
                                 Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                                 startActivity(intent);
                                 finish();
                                 dialog.dismiss();
                             }else {
-                                Toast.makeText(LoginActivity.this, "حدث خطأ حاول مره أخرى لاحقا", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, "اسم المستخدم او كلمه المرور خطأ", Toast.LENGTH_LONG).show();
                                 dialog.dismiss();
 
                             }

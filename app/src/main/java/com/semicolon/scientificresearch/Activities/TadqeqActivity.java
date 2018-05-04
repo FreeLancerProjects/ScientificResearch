@@ -1,31 +1,41 @@
 package com.semicolon.scientificresearch.Activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.semicolon.scientificresearch.EventListener.Events;
 import com.semicolon.scientificresearch.Models.ResponseModel;
 import com.semicolon.scientificresearch.Models.UserModel;
 import com.semicolon.scientificresearch.R;
 import com.semicolon.scientificresearch.Services.Api;
 import com.semicolon.scientificresearch.Services.Services;
+import com.semicolon.scientificresearch.Services.Tags;
 import com.semicolon.scientificresearch.SingleTone.UserSingleTone;
 import com.semicolon.scientificresearch.databinding.ActivityTadqeqBinding;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +55,10 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
     private UserModel userModel;
     private UserSingleTone userSingleTone;
     private String encodedFile;
+    private String exten;
+    private FilePickerDialog filePickerDialog;
+    private String user_type;
+    private AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +69,31 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
         userSingleTone.GetUserData(this);
         tadqeqBinding.setEvent(this);
         CreateProgDialog();
+        CreateAlertDialog();
+        getDataFromIntent();
     }
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent!=null)
+        {
+            if (intent.hasExtra("user_type"))
+            {
+                user_type = intent.getStringExtra("user_type");
+            }
+        }
+    }
+    private void CreateAlertDialog() {
+        alertDialog = new AlertDialog.Builder(this)
+                .setMessage("هذه الخدمة غير متاحة للزائرين عليك بإنشاء حساب وتسجيل الدخول")
+                .setPositiveButton("إغلاق", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        alertDialog.dismiss();
+                        finish();
 
+                    }
+                }).setCancelable(false).create();
+    }
     private void CreateProgDialog()
     {
         ProgressBar bar = new ProgressBar(this);
@@ -74,11 +111,25 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
         int id = view.getId();
         switch (id)
         {
-            case R.id.file_name:
-                SelectFile();
+            case R.id.sel_file:
+                if (user_type.equals(Tags.visitor))
+                {
+                    alertDialog.show();
+                }else
+                    {
+                        SelectFile();
+
+                    }
                 break;
             case R.id.upload_btn:
-                upload_file();
+                if (user_type.equals(Tags.visitor))
+                {
+                    alertDialog.show();
+                }else
+                {
+                    upload_file();
+
+                }
                 break;
             case R.id.back:
                 finish();
@@ -87,70 +138,116 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
     }
 
     private void upload_file() {
-        dialog.show();
-        Map<String,String> map = new HashMap<>();
-        map.put("user_id_fk",userModel.getUser_id());
-        map.put("requested_file",encodedFile);
-        Log.e("file",encodedFile);
-        Retrofit retrofit = Api.getRetrofit();
-        Services services = retrofit.create(Services.class);
-        Call<ResponseModel> call = services.UploadTranslateFile(map);
-        call.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                if (response.isSuccessful())
-                {
-                    if (response.body().getMessage()==1)
+        if (!TextUtils.isEmpty(encodedFile) && encodedFile!=null)
+        {
+            dialog.show();
+            Log.e("user_id",userModel.getUser_id());
+
+            Map<String,String> map = new HashMap<>();
+            map.put("user_id_fk",userModel.getUser_id());
+            map.put("requested_file",encodedFile);
+            Log.e("file",encodedFile);
+            Retrofit retrofit = Api.getRetrofit();
+            Services services = retrofit.create(Services.class);
+            Call<ResponseModel> call = services.UploadTranslateFile(map);
+            call.enqueue(new Callback<ResponseModel>() {
+                @Override
+                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                    if (response.isSuccessful())
                     {
-                        dialog.dismiss();
-                        Toast.makeText(TadqeqActivity.this, "تم رفع الملف بنجاح", Toast.LENGTH_LONG).show();
-                        finish();
+                        if (response.body().getMessage()==1)
+                        {
+                            dialog.dismiss();
+                            Toast.makeText(TadqeqActivity.this, "تم رفع الملف بنجاح", Toast.LENGTH_LONG).show();
+                            finish();
+                        }else
+                            {
+                                dialog.dismiss();
+                                Toast.makeText(TadqeqActivity.this, "فشل حاول مره أخرى لاحقا", Toast.LENGTH_SHORT).show();
+
+                            }
                     }
                 }
+
+                @Override
+                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                    dialog.dismiss();
+                    Log.e("Error",t.getMessage());
+                    Toast.makeText(TadqeqActivity.this, "فشل حاول مره أخرى لاحقا", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else
+            {
+                Toast.makeText(this, "إختر الملف", Toast.LENGTH_LONG).show();
             }
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                dialog.dismiss();
-                Log.e("Error",t.getMessage());
-                Toast.makeText(TadqeqActivity.this, "فشل حاول مره أخرى لاحقا", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void SelectFile() {
-        String[] mimeTypes =
-                {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
-                        "application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-                        "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-                        "text/plain",
-                        "application/pdf",
-                        "application/zip"};
-
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+       /* Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("file/*");*/
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            intent.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
-            if (mimeTypes.length > 0) {
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+//        String[] mimeTypes =
+//                {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
+//                        "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
+//                };
+//
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            intent.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
+//            if (mimeTypes.length > 0) {
+//                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+//            }
+//        } else {
+//            String mimeTypesStr = "";
+//            for (String mimeType : mimeTypes) {
+//                mimeTypesStr += mimeType + "|";
+//            }
+//            intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
+//        }
+       // startActivityForResult(intent.createChooser(intent,"إختر الملف"),FILE_REQ);
+
+        String [] exten = {"doc","docx"};
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+        properties.root = new File(DialogConfigs.DEFAULT_DIR);
+        properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = new File(DialogConfigs.DEFAULT_DIR);
+        properties.extensions =exten ;
+
+        filePickerDialog = new FilePickerDialog(this,properties);
+        filePickerDialog.setTitle("Select file");
+        filePickerDialog.setDialogSelectionListener(new DialogSelectionListener() {
+            @Override
+            public void onSelectedFilePaths(String[] files) {
+                Log.e("file",files[0]+"");
+                String filePath = files[0];
+                tadqeqBinding.fileName.setText(filePath);
+                File file = new File(filePath);
+                try {
+                    InputStream inputStream = new FileInputStream(file);
+                    enCodeFile(inputStream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-        } else {
-            String mimeTypesStr = "";
-            for (String mimeType : mimeTypes) {
-                mimeTypesStr += mimeType + "|";
-            }
-            intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
-        }
-        startActivityForResult(intent.createChooser(intent,"إختر الملف"),FILE_REQ);
+        });
+        filePickerDialog.show();
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FILE_REQ && resultCode == RESULT_OK && data != null)
         {
             Uri uri = data.getData();
+            exten = getContentResolver().getType(uri);
+            Log.e("type",exten);
             try {
                 enCodeFile(getContentResolver().openInputStream(uri));
             } catch (FileNotFoundException e) {
@@ -159,6 +256,25 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
             tadqeqBinding.fileName.setText(String.valueOf(uri));
             Log.e("uri",uri.toString()+"");
 
+        }
+    }*/
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(filePickerDialog!=null)
+                    {   //Show dialog if the read permission has been granted.
+                        filePickerDialog.show();
+
+                    }
+                }
+                else {
+                    //Permission has not been granted. Notify the user.
+                    Toast.makeText(TadqeqActivity.this,"Permission is Required for getting list of files",Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 

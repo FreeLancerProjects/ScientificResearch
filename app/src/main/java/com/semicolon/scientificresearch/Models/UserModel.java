@@ -21,6 +21,20 @@ public class UserModel implements Serializable {
 
     }
 
+    public UserModel(String user_id, String user_name, String user_username, String user_pass, String user_email, String user_phone, String user_country, String degree, String company, String specialization, String user_type) {
+        this.user_id = user_id;
+        this.user_name = user_name;
+        this.user_username = user_username;
+        this.user_pass = user_pass;
+        this.user_email = user_email;
+        this.user_phone = user_phone;
+        this.user_country = user_country;
+        this.degree = degree;
+        this.company = company;
+        this.specialization = specialization;
+        this.user_type = user_type;
+    }
+
     public String getUser_id() {
         return user_id;
     }

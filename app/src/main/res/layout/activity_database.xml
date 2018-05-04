@@ -136,6 +136,45 @@
                 android:longClickable="false"
                 />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/king_abdullah"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:background="@drawable/database_yellow"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="@{event.onClickListener}"
+
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="مكتبة الملك عبد الله الرقمية"
+                android:textSize="15sp"
+                android:clickable="false"
+                android:longClickable="false"
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="حيث يقوم الباحث بالبحث في المكتبة الوطنيه بالرياض ومكتبة الكونجرس للتحقق من إيجاز موضوع البحث"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 </layout>

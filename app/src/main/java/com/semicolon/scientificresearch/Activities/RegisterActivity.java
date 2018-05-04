@@ -23,6 +23,7 @@ import com.semicolon.scientificresearch.EventListener.Events;
 import com.semicolon.scientificresearch.Models.UserModel;
 import com.semicolon.scientificresearch.R;
 import com.semicolon.scientificresearch.Services.Api;
+import com.semicolon.scientificresearch.Services.Preferences;
 import com.semicolon.scientificresearch.Services.Services;
 import com.semicolon.scientificresearch.Services.Tags;
 import com.semicolon.scientificresearch.SingleTone.UserSingleTone;
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
     private String user_Type,degree;
     private UserSingleTone userSingleTone;
     private ProgressDialog dialog;
+    private Preferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
         });
 
         ////////////////////////////////////////////
+        preferences = new Preferences(this);
         userSingleTone = UserSingleTone.getInstance();
         CreateProgDialog();
         ////////////////////////////////////////////
@@ -268,7 +271,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
                         UserModel userModel = response.body();
                         if (userModel.getMessage()==1)
                         {
-
+                            preferences.CreateSharedPref(userModel);
                             userSingleTone.SetUserData(userModel);
                             Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
                             startActivity(intent);
