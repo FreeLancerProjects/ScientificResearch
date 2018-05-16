@@ -57,7 +57,7 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
     private String encodedFile;
     private String exten;
     private FilePickerDialog filePickerDialog;
-    private String user_type;
+    private String user_type="";
     private AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +84,8 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
     }
     private void CreateAlertDialog() {
         alertDialog = new AlertDialog.Builder(this)
-                .setMessage("هذه الخدمة غير متاحة للزائرين عليك بإنشاء حساب وتسجيل الدخول")
-                .setPositiveButton("إغلاق", new DialogInterface.OnClickListener() {
+                .setMessage(getString(R.string.ser_not_av))
+                .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         alertDialog.dismiss();
@@ -100,7 +100,7 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
         Drawable drawable = bar.getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(this,R.color.ko7ly), PorterDuff.Mode.SRC_IN);
         dialog = new ProgressDialog(this);
-        dialog.setMessage("جار رفع الملف...");
+        dialog.setMessage(getString(R.string.upload_file));
         dialog.setIndeterminateDrawable(drawable);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(true);
@@ -112,7 +112,7 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
         switch (id)
         {
             case R.id.sel_file:
-                if (user_type.equals(Tags.visitor))
+                if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
                 }else
@@ -122,7 +122,7 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
                     }
                 break;
             case R.id.upload_btn:
-                if (user_type.equals(Tags.visitor))
+                if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
                 }else
@@ -138,6 +138,8 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
     }
 
     private void upload_file() {
+        Log.e("user_id",userModel.getUser_id());
+
         if (!TextUtils.isEmpty(encodedFile) && encodedFile!=null)
         {
             dialog.show();
@@ -158,12 +160,12 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
                         if (response.body().getMessage()==1)
                         {
                             dialog.dismiss();
-                            Toast.makeText(TadqeqActivity.this, "تم رفع الملف بنجاح", Toast.LENGTH_LONG).show();
+                            Toast.makeText(TadqeqActivity.this, R.string.file_uploaded, Toast.LENGTH_LONG).show();
                             finish();
                         }else
                             {
                                 dialog.dismiss();
-                                Toast.makeText(TadqeqActivity.this, "فشل حاول مره أخرى لاحقا", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TadqeqActivity.this, R.string.fail_try, Toast.LENGTH_SHORT).show();
 
                             }
                     }
@@ -173,12 +175,12 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
                 public void onFailure(Call<ResponseModel> call, Throwable t) {
                     dialog.dismiss();
                     Log.e("Error",t.getMessage());
-                    Toast.makeText(TadqeqActivity.this, "فشل حاول مره أخرى لاحقا", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TadqeqActivity.this, R.string.fail_try, Toast.LENGTH_SHORT).show();
                 }
             });
         }else
             {
-                Toast.makeText(this, "إختر الملف", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.choose_file, Toast.LENGTH_LONG).show();
             }
 
     }

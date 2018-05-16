@@ -56,7 +56,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textSize="17sp"
-                        android:text="العينات"
+                        android:text="@string/morg_eq"
                         />
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
@@ -70,7 +70,7 @@
             android:textSize="18sp"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="معادلة مورجان"
+            android:text="@string/morg_eq"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,6 +85,7 @@
             >
 
             <EditText
+                android:id="@+id/input"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="45dp"
@@ -93,13 +94,15 @@
                 android:paddingRight="10dp"
                 android:textColor="@color/ko7ly"
                 android:textSize="12sp"
-                android:hint="أدخل حجم العينة بالارقام"
+                android:hint="@string/sample_size"
                 android:singleLine="true"
+                android:inputType="numberDecimal"
 
                 />
 
         </LinearLayout>
         <TextView
+            android:id="@+id/result"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/mo3dla_bg"
@@ -123,7 +126,7 @@
             android:background="@drawable/btn_bg"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="النتيجة"
+            android:text="@string/result"
             android:textSize="15sp"
             android:onClick="@{event::onClickListener}"
 

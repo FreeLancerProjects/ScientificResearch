@@ -58,7 +58,7 @@
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             android:textSize="17sp"
-                            android:text="التحكيم"
+                            android:text="@string/statistical_analyst"
                             />
                     </RelativeLayout>
                 </android.support.v7.widget.Toolbar>
@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="إضغط هنا لتحميل الملف"
+                    android:text="@string/choos_upload"
                     android:layout_marginBottom="10dp"
                     android:clickable="false"
                     android:longClickable="false"
@@ -118,7 +118,7 @@
                 android:textSize="15sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:text="رفع"
+                android:text="@string/upl"
                 android:gravity="center"
                 android:onClick="@{event::onClickListener}"
 

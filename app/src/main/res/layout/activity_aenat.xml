@@ -54,7 +54,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textSize="17sp"
-                        android:text="العينات"
+                        android:text="@string/samples"
                         />
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
@@ -68,12 +68,13 @@
                 android:background="@drawable/yellow_aenat"
                 android:textColor="@color/ko7ly"
                 android:textStyle="bold"
-                android:text="معادلة مورجان"
+                android:text="@string/morg_eq"
                 android:gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="50dp"
                 android:onClick="@{event::onClickListener}"
+                android:paddingRight="60dp"
 
 
                 />
@@ -88,12 +89,13 @@
                 android:background="@drawable/belue_aenat"
                 android:textColor="@color/ko7ly"
                 android:textStyle="bold"
-                android:text="أخرى"
+                android:text="@string/other"
                 android:gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
                 android:onClick="@{event::onClickListener}"
+                android:paddingRight="60dp"
 
                 />
 

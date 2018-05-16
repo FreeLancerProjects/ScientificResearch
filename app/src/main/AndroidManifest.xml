@@ -7,30 +7,21 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/apps_icons"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/apps_icons"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.LoginActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".Activities.HomeActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".Activities.ChooserActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".Activities.TrainingActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -62,10 +53,18 @@
         <activity android:name=".Activities.DatabaseActivity" />
         <activity android:name=".Activities.OtherWebViewActivity" />
         <activity android:name=".Activities.FreeTranslation" />
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".Activities.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".Activities.RegisterActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            ></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activities.CourseDetailsActivity" />
+        <activity android:name=".Activities.EqtbasActivity"></activity>
     </application>
 
 </manifest>

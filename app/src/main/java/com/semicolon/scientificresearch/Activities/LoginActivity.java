@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements Events{
         Drawable drawable = bar.getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(this,R.color.ko7ly), PorterDuff.Mode.SRC_IN);
         dialog = new ProgressDialog(this);
-        dialog.setMessage("جار تسجيل الدخول...");
+        dialog.setMessage(getString(R.string.logining));
         dialog.setIndeterminateDrawable(drawable);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(true);
@@ -124,11 +124,11 @@ public class LoginActivity extends AppCompatActivity implements Events{
         String user_pass = loginBinding.userPassword.getText().toString();
         if (TextUtils.isEmpty(user_name))
         {
-            loginBinding.userName.setError("أدخل اسم المستخدم او البريد الالكتروني");
+            loginBinding.userName.setError(getString(R.string.enter_user_email));
 
         }else if (TextUtils.isEmpty(user_pass))
         {
-            loginBinding.userPassword.setError("أدخل كلمة المرور");
+            loginBinding.userPassword.setError(getString(R.string.enter_pass));
             loginBinding.userName.setError(null);
 
         }
@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements Events{
                                 finish();
                                 dialog.dismiss();
                             }else {
-                                Toast.makeText(LoginActivity.this, "اسم المستخدم او كلمه المرور خطأ", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, R.string.error_user_pass, Toast.LENGTH_LONG).show();
                                 dialog.dismiss();
 
                             }
@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity implements Events{
                     @Override
                     public void onFailure(Call<UserModel> call, Throwable t) {
                         Log.e("error",t.getMessage());
-                        Toast.makeText(LoginActivity.this, "حدث خطأ حاول مره أخرى لاحقا", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, R.string.fail_try, Toast.LENGTH_LONG).show();
                         dialog.dismiss();
 
                     }

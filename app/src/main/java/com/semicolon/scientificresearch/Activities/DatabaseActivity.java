@@ -16,7 +16,7 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class DatabaseActivity extends AppCompatActivity implements Events{
 
-    private String user_type;
+    private String user_type="";
     private ActivityDatabaseBinding databaseBinding;
     private AlertDialog alertDialog;
 
@@ -42,8 +42,8 @@ public class DatabaseActivity extends AppCompatActivity implements Events{
     }
     private void CreateAlertDialog() {
         alertDialog = new AlertDialog.Builder(this)
-                .setMessage("هذه الخدمة غير متاحة للزائرين عليك بإنشاء حساب وتسجيل الدخول")
-                .setPositiveButton("إغلاق", new DialogInterface.OnClickListener() {
+                .setMessage(getString(R.string.ser_not_av))
+                .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         alertDialog.dismiss();

@@ -13,7 +13,7 @@ import com.semicolon.scientificresearch.databinding.ActivityAenatBinding;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class AenatActivity extends AppCompatActivity implements Events{
-    private String user_type;
+    private String user_type="";
     private ActivityAenatBinding aenatBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

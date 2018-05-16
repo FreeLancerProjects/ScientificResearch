@@ -31,9 +31,11 @@ public interface Services {
     Call<ResponseModel> UploadTa7keemFile(@FieldMap Map<String,String> map);
 
     @FormUrlEncoded
-    @POST("/api/arbitration")
+    @POST("/api/analyses")
     Call<ResponseModel> UploadTa7lel(@FieldMap Map<String,String> map);
-
+    @FormUrlEncoded
+    @POST("/api/citation")
+    Call<ResponseModel> Uploadeqtbas(@FieldMap Map<String,String> map);
     @GET("/api/courses")
     Call<List<TrainingModel>> TrainingData();
 

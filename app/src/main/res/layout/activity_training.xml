@@ -50,7 +50,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textSize="17sp"
-                        android:text="تدريب واستشارات"
+                        android:text="@string/training_consulting"
                         />
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>

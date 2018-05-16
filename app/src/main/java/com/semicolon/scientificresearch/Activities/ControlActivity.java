@@ -58,7 +58,7 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
     private String encodedFile;
     private String exten;
     private  FilePickerDialog filePickerDialog;
-    private String user_type;
+    private String user_type="";
     private AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,8 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"JannaLT-Regular.ttf",true);
         controlBinding.setEvent(this);
+        userSingleTone = UserSingleTone.getInstance();
+        userSingleTone.GetUserData(this);
         getDataFromIntent();
         CreateProgDialog();
         CreateAlertDialog();
@@ -79,11 +81,7 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
             if (intent.hasExtra("user_type"))
             {
                 user_type = intent.getStringExtra("user_type");
-            }else
-                {
-                    userSingleTone = UserSingleTone.getInstance();
-                    userSingleTone.GetUserData(this);
-                }
+            }
         }
     }
     private void CreateProgDialog()
@@ -92,7 +90,7 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
         Drawable drawable = bar.getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(this,R.color.ko7ly), PorterDuff.Mode.SRC_IN);
         dialog = new ProgressDialog(this);
-        dialog.setMessage("جار رفع الملف...");
+        dialog.setMessage(getString(R.string.upload_file));
         dialog.setIndeterminateDrawable(drawable);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(true);
@@ -100,8 +98,8 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
     }
     private void CreateAlertDialog() {
         alertDialog = new AlertDialog.Builder(this)
-                .setMessage("هذه الخدمة غير متاحة للزائرين عليك بإنشاء حساب وتسجيل الدخول")
-                .setPositiveButton("إغلاق", new DialogInterface.OnClickListener() {
+                .setMessage(R.string.ser_not_av)
+                .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         alertDialog.dismiss();
@@ -117,7 +115,7 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
         switch (id)
         {
             case R.id.sel_file:
-                if (user_type.equals(Tags.visitor))
+                if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
 
@@ -128,7 +126,7 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
                 }
                 break;
             case R.id.upload_btn:
-                if (user_type.equals(Tags.visitor))
+                if (user_type!=null &&user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
 
@@ -145,43 +143,45 @@ public class ControlActivity extends AppCompatActivity implements Events,UserSin
         }
     }
     private void upload_file() {
+        //Log.e("user_id",userModel.getUser_id());
+
         if (encodedFile!=null &&!TextUtils.isEmpty(encodedFile))
         {
-
-        }else
-            {
-                Toast.makeText(this, "إختر الملف", Toast.LENGTH_LONG).show();
-            }
-        dialog.show();
-        Map<String,String> map = new HashMap<>();
-        Log.e("user_id",userModel.getUser_id());
-        map.put("user_id_fk",userModel.getUser_id());
-        map.put("requested_file",encodedFile);
-        Log.e("file",encodedFile);
-        Retrofit retrofit = Api.getRetrofit();
-        Services services = retrofit.create(Services.class);
-        Call<ResponseModel> call = services.UploadTa7keemFile(map);
-        call.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                if (response.isSuccessful())
-                {
-                    if (response.body().getMessage()==1)
+            dialog.show();
+            Map<String,String> map = new HashMap<>();
+            map.put("user_id_fk",userModel.getUser_id());
+            map.put("requested_file",encodedFile);
+            Log.e("file",encodedFile);
+            Retrofit retrofit = Api.getRetrofit();
+            Services services = retrofit.create(Services.class);
+            Call<ResponseModel> call = services.UploadTa7keemFile(map);
+            call.enqueue(new Callback<ResponseModel>() {
+                @Override
+                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                    if (response.isSuccessful())
                     {
-                        dialog.dismiss();
-                        Toast.makeText(ControlActivity.this, "تم رفع الملف بنجاح", Toast.LENGTH_LONG).show();
-                        finish();
+                        if (response.body().getMessage()==1)
+                        {
+                            dialog.dismiss();
+                            Toast.makeText(ControlActivity.this, R.string.file_uploaded, Toast.LENGTH_LONG).show();
+                            finish();
+                        }
                     }
                 }
+
+                @Override
+                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                    dialog.dismiss();
+                    Log.e("Error",t.getMessage());
+                    Toast.makeText(ControlActivity.this, R.string.fail_try, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else
+            {
+                Toast.makeText(this, R.string.choose_file, Toast.LENGTH_LONG).show();
             }
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                dialog.dismiss();
-                Log.e("Error",t.getMessage());
-                Toast.makeText(ControlActivity.this, "فشل حاول مره أخرى لاحقا", Toast.LENGTH_SHORT).show();
-            }
-        });    }
+           }
 
     private void SelectFile() {
         String [] exten = {"doc","docx"};

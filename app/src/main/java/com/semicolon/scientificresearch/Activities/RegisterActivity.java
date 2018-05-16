@@ -3,7 +3,6 @@ package com.semicolon.scientificresearch.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -48,8 +47,6 @@ public class RegisterActivity extends AppCompatActivity implements Events{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
-        registerBinding.userPhone.setDefaultCountry("sa");
-        registerBinding.userPhone.getTextInputLayout().getEditText().setTextColor(Color.WHITE);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_spinner, getResources().getStringArray(R.array.user_type));
         registerBinding.userType.setAdapter(adapter);
@@ -167,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
         Drawable drawable = bar.getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(this,R.color.ko7ly), PorterDuff.Mode.SRC_IN);
         dialog = new ProgressDialog(this);
-        dialog.setMessage("جار إنشاء حساب جديد...");
+        dialog.setMessage(getString(R.string.create_acc));
         dialog.setIndeterminateDrawable(drawable);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(true);
@@ -177,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
 
         String name = registerBinding.name.getText().toString();
         String email= registerBinding.email.getText().toString();
-        String phone= registerBinding.userPhone.getPhoneNumber();
+        String phone= registerBinding.userPhone.getText().toString();
         String country=registerBinding.country.getText().toString();
         String organization = registerBinding.organization.getText().toString();
         String user_name = registerBinding.userName.getText().toString();
@@ -185,61 +182,61 @@ public class RegisterActivity extends AppCompatActivity implements Events{
         String user_specialization = registerBinding.speciality.getText().toString();
         if (TextUtils.isEmpty(name))
         {
-            registerBinding.name.setError("أدخل الاسم الاول والاخير");
+            registerBinding.name.setError(getString(R.string.enter_first_last));
         }else if (TextUtils.isEmpty(email))
         {
             registerBinding.name.setError(null);
-            registerBinding.email.setError("أدخل البريد الالكتروني");
+            registerBinding.email.setError(getString(R.string.enter_email));
 
 
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
             registerBinding.name.setError(null);
-            registerBinding.email.setError("تحقق من البريد الالكتروني");
+            registerBinding.email.setError(getString(R.string.inv_email));
 
 
         }
         else if (TextUtils.isEmpty(phone))
         {
             registerBinding.email.setError(null);
-            registerBinding.userPhone.setError("أدخل رقم الجوال");
+            registerBinding.userPhone.setError(getString(R.string.enter_phone));
 
         }
-        else if (!registerBinding.userPhone.isValid())
+        else if (!Patterns.PHONE.matcher(phone).matches())
         {
             registerBinding.email.setError(null);
-            registerBinding.userPhone.setError("تحقق من رقم الجوال");
+            registerBinding.userPhone.setError(getString(R.string.inv_phone));
 
         }
         else if (TextUtils.isEmpty(country))
         {
             registerBinding.userPhone.setError(null);
-            registerBinding.country.setError("أدخل الدولة");
+            registerBinding.country.setError(getString(R.string.enter_country));
 
         }
         else if (TextUtils.isEmpty(organization))
         {
             registerBinding.country.setError(null);
-            registerBinding.organization.setError("أدخل إسم المؤسسة");
+            registerBinding.organization.setError(getString(R.string.enter_orgn));
 
         }
         else if (TextUtils.isEmpty(user_specialization))
         {
             registerBinding.organization.setError(null);
-            registerBinding.speciality.setError("أدخل التخصص");
+            registerBinding.speciality.setError(getString(R.string.enter_spec));
 
         }
         else if (TextUtils.isEmpty(user_name))
         {
             registerBinding.speciality.setError(null);
-            registerBinding.userPhone.setError("أدخل إسم المستخدم");
+            registerBinding.userPhone.setError(getString(R.string.enter_username));
 
         }
         else if (TextUtils.isEmpty(user_pass))
         {
             registerBinding.userName.setError(null);
-            registerBinding.userPassword.setError("أدخل كلمة المرور");
+            registerBinding.userPassword.setError(getString(R.string.enter_pass));
 
         }
         else
@@ -279,7 +276,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
                             dialog.dismiss();
                         }else
                             {
-                                Toast.makeText(RegisterActivity.this, "لم يتم إنشاء حساب حاول مره أخرى لاحقا", Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterActivity.this, R.string.fail_try, Toast.LENGTH_LONG).show();
                                 dialog.dismiss();
 
 
@@ -291,7 +288,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
                     public void onFailure(Call<UserModel> call, Throwable t) {
                         Log.e("error",t.getMessage());
                         dialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "لم يتم إنشاء حساب حاول مره أخرى لاحقا", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, R.string.fail_try, Toast.LENGTH_LONG).show();
 
 
                     }

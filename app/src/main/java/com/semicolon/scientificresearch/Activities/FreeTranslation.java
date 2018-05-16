@@ -45,6 +45,11 @@ public class FreeTranslation extends AppCompatActivity implements Events{
                 intent4.putExtra("url","http://translation2.paralink.com/");
                 startActivity(intent4);
                 break;
+            case R.id.doc_trans:
+                Intent intent5 = new Intent(FreeTranslation.this,OtherWebViewActivity.class);
+                intent5.putExtra("url","https://www.onlinedoctranslator.com/translationform");
+                startActivity(intent5);
+                break;
             case R.id.back:
                 finish();
                 break;

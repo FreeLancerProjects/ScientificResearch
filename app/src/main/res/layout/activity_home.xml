@@ -51,7 +51,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textSize="17sp"
-                        android:text="باحث"
+                        android:text="@string/researc"
                         />
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
@@ -82,11 +82,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/aena"
                 android:gravity="center"
-                android:text="العينات"
+                android:text="@string/samples"
                 android:paddingLeft="30dp"
                 android:textStyle="bold"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 />
             <Button
                 android:id="@+id/btn_db"
@@ -96,11 +96,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/database"
                 android:textStyle="bold"
-                android:text="قواعد البيانات"
+                android:text="@string/database"
                 android:gravity="center"
                 android:paddingRight="35dp"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
 
                 />
@@ -122,11 +122,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/translate"
                 android:gravity="center"
-                android:text="ترجمة"
+                android:text="@string/trans"
                 android:paddingLeft="30dp"
                 android:textStyle="bold"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
             <Button
@@ -137,11 +137,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/trane"
                 android:textStyle="bold"
-                android:text="تدريب"
+                android:text="@string/traning"
                 android:gravity="center"
                 android:paddingRight="35dp"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
         </LinearLayout>
@@ -162,11 +162,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/control"
                 android:gravity="center"
-                android:text="تحكيم"
+                android:text="@string/arbitration"
                 android:paddingLeft="30dp"
                 android:textStyle="bold"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
             <Button
@@ -177,11 +177,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/td2e2"
                 android:textStyle="bold"
-                android:text="تدقيق"
+                android:text="@string/audit"
                 android:gravity="center"
                 android:paddingRight="35dp"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
         </LinearLayout>
@@ -200,11 +200,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/spss"
                 android:gravity="center"
-                android:text="تحليل احصائي"
+                android:text="@string/statistical_analyst"
                 android:paddingLeft="35dp"
                 android:textStyle="bold"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
             <Button
@@ -215,11 +215,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/twfe2"
                 android:textStyle="bold"
-                android:text="التوثيق"
+                android:text="@string/documentation"
                 android:gravity="center"
-                android:paddingRight="35dp"
+                android:paddingRight="45dp"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
 
@@ -247,34 +247,34 @@
             android:padding="5dp"
             android:layout_marginBottom="10dp"
             >
-            <Button
-                android:id="@+id/btn_eqtbas"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="@drawable/aena"
-                android:gravity="center"
-                android:text="إقتباس"
-                android:paddingLeft="30dp"
-                android:textStyle="bold"
-                android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
-                />
+
             <Button
                 android:id="@+id/btn_service"
 
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
-                android:background="@drawable/database"
                 android:textStyle="bold"
-                android:text="خدمات"
+                android:text="@string/serv"
                 android:gravity="center"
-                android:paddingRight="35dp"
                 android:onClick="@{event::onClickListener}"
-                android:textSize="12sp"
+                android:textSize="10sp"
+                android:background="@drawable/aena"
+                android:paddingLeft="35dp"
 
-
+                />
+            <Button
+                android:id="@+id/btn_eqtbas"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/quotation"
+                android:textStyle="bold"
+                android:onClick="@{event::onClickListener}"
+                android:textSize="10sp"
+                android:background="@drawable/database"
+                android:paddingRight="40dp"
                 />
         </LinearLayout>
     </LinearLayout>

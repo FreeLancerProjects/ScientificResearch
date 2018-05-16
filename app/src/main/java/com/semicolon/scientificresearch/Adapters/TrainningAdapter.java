@@ -63,7 +63,7 @@ public class TrainningAdapter extends RecyclerView.Adapter<TrainningAdapter.myHo
         };
 
         Picasso.with(context).load(Uri.parse(Tags.ImgPath+trainingModel.getCourse_image())).into(target);
-        holder.trainingItemBinding.reserve.setOnClickListener(new View.OnClickListener() {
+        holder.trainingItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activity.SetPos(holder.getAdapterPosition());

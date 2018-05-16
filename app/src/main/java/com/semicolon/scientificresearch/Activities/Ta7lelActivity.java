@@ -53,7 +53,7 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
     private ProgressDialog dialog;
     private String encodedFile;
     private UserModel userModel;
-    private String user_type;
+    private String user_type="";
     private AlertDialog alertDialog;
 
 
@@ -64,6 +64,8 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"JannaLT-Regular.ttf",true);
         ta7lelBinding.setEvent(this);
+        UserSingleTone singleTone = UserSingleTone.getInstance();
+        singleTone.GetUserData(this);
         CreateProgDialog();
         CreateAlertDialog();
         getDataFromIntent();
@@ -76,17 +78,13 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
             if (intent.hasExtra("user_type"))
             {
                 user_type = intent.getStringExtra("user_type");
-            }else
-                {
-                    UserSingleTone singleTone = UserSingleTone.getInstance();
-                    singleTone.GetUserData(this);
-                }
+            }
         }
     }
     private void CreateAlertDialog() {
         alertDialog = new AlertDialog.Builder(this)
-                .setMessage("هذه الخدمة غير متاحة للزائرين عليك بإنشاء حساب وتسجيل الدخول")
-                .setPositiveButton("إغلاق", new DialogInterface.OnClickListener() {
+                .setMessage(getString(R.string.ser_not_av))
+                .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         alertDialog.dismiss();
@@ -101,7 +99,7 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
         Drawable drawable = bar.getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(this,R.color.ko7ly), PorterDuff.Mode.SRC_IN);
         dialog = new ProgressDialog(this);
-        dialog.setMessage("جار رفع الملف...");
+        dialog.setMessage(getString(R.string.upload_file));
         dialog.setIndeterminateDrawable(drawable);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(true);
@@ -116,7 +114,7 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
                 finish();
                 break;
             case R.id.sel_file:
-                if (user_type.equals(Tags.visitor))
+                if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
                 }else
@@ -126,7 +124,7 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
                     }
                 break;
             case R.id.upload_btn:
-                if (user_type.equals(Tags.visitor))
+                if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
 
@@ -206,43 +204,45 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
 
     }
     private void upload_file() {
+ //       Log.e("user_id",userModel.getUser_id());
+
         if (encodedFile!=null &&!TextUtils.isEmpty(encodedFile))
         {
-
-        }else
-        {
-            Toast.makeText(this, "إختر الملف", Toast.LENGTH_LONG).show();
-        }
-        dialog.show();
-        Map<String,String> map = new HashMap<>();
-        Log.e("user_id",userModel.getUser_id());
-        map.put("user_id_fk",userModel.getUser_id());
-        map.put("requested_file",encodedFile);
-        Log.e("file",encodedFile);
-        Retrofit retrofit = Api.getRetrofit();
-        Services services = retrofit.create(Services.class);
-        Call<ResponseModel> call = services.UploadTa7lel(map);
-        call.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                if (response.isSuccessful())
-                {
-                    if (response.body().getMessage()==1)
+            dialog.show();
+            Map<String,String> map = new HashMap<>();
+            Log.e("user_id",userModel.getUser_id());
+            map.put("user_id_fk",userModel.getUser_id());
+            map.put("requested_file",encodedFile);
+            Log.e("file",encodedFile);
+            Retrofit retrofit = Api.getRetrofit();
+            Services services = retrofit.create(Services.class);
+            Call<ResponseModel> call = services.UploadTa7lel(map);
+            call.enqueue(new Callback<ResponseModel>() {
+                @Override
+                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                    if (response.isSuccessful())
                     {
-                        dialog.dismiss();
-                        Toast.makeText(Ta7lelActivity.this, "تم رفع الملف بنجاح", Toast.LENGTH_LONG).show();
-                        finish();
+                        if (response.body().getMessage()==1)
+                        {
+                            dialog.dismiss();
+                            Toast.makeText(Ta7lelActivity.this, R.string.file_uploaded, Toast.LENGTH_LONG).show();
+                            finish();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                dialog.dismiss();
-                Log.e("Error",t.getMessage());
-                Toast.makeText(Ta7lelActivity.this, "فشل حاول مره أخرى لاحقا", Toast.LENGTH_SHORT).show();
-            }
-        });    }
+                @Override
+                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                    dialog.dismiss();
+                    Log.e("Error",t.getMessage());
+                    Toast.makeText(Ta7lelActivity.this, R.string.fail_try, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else
+        {
+            Toast.makeText(this, R.string.choose_file, Toast.LENGTH_LONG).show();
+        }
+        }
 
     @Override
     public void getUserData(UserModel userModel) {

@@ -15,6 +15,7 @@ import com.semicolon.scientificresearch.EventListener.Events;
 import com.semicolon.scientificresearch.Models.UserModel;
 import com.semicolon.scientificresearch.R;
 import com.semicolon.scientificresearch.Services.Preferences;
+import com.semicolon.scientificresearch.Services.Tags;
 import com.semicolon.scientificresearch.SingleTone.UserSingleTone;
 import com.semicolon.scientificresearch.databinding.ActivityHomeBinding;
 
@@ -35,7 +36,8 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
         homeBinding.setEvent(this);
         setSupportActionBar(homeBinding.toolBar);
         preferences = new Preferences(this);
-
+        userSingleTone = UserSingleTone.getInstance();
+        userSingleTone.GetUserData(this);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"JannaLT-Regular.ttf",true);
         Log.e("home","Home");
@@ -50,24 +52,20 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
             if (intent.hasExtra("user_type"))
             {
                 user_type = intent.getStringExtra("user_type");
-            }else
-                {
-                    userSingleTone = UserSingleTone.getInstance();
-                    userSingleTone.GetUserData(this);
-                }
+            }
         }
     }
 
     private void CreateLogOutAlert() {
         alertDialog = new AlertDialog.Builder(this)
-                .setMessage("هل ترغب في تسجيل خروج ؟")
-                .setPositiveButton("نعم", new DialogInterface.OnClickListener() {
+                .setMessage(R.string.Logout_)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         LogOut();
                         alertDialog.dismiss();
                     }
-                }).setNegativeButton("لا", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         alertDialog.dismiss();
@@ -133,8 +131,8 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
                 startActivity(intent8);
                 break;
             case R.id.btn_eqtbas:
-                Intent intent9 = new Intent(this,OtherWebViewActivity.class);
-                intent9.putExtra("url","https://www.bibme.org/grammar-and-plagiarism/?=bmp_BM.C.300-250&intcid=wt.BibMe.BM.C.300-250&inhousead=BM.C.300-250");
+                Intent intent9 = new Intent(this,EqtbasActivity.class);
+                intent9.putExtra("user_type",user_type);
                 startActivity(intent9);
                 break;
 
@@ -153,7 +151,14 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
         switch (id)
         {
             case R.id.logout:
-                alertDialog.show();
+                if (user_type!=null && user_type.equals(Tags.visitor))
+                {
+                    finish();
+                }else
+                    {
+                        alertDialog.show();
+
+                    }
                 break;
         }
         return super.onOptionsItemSelected(item);
