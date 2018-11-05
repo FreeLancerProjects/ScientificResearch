@@ -51,10 +51,11 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
     private ActivityTa7lelBinding ta7lelBinding;
     private FilePickerDialog filePickerDialog;
     private ProgressDialog dialog;
-    private String encodedFile;
+    private String encodedFile,encodedFile2;
     private UserModel userModel;
     private String user_type="";
     private AlertDialog alertDialog;
+    private String file_word_path="",file_xls_path="";
 
 
     @Override
@@ -113,15 +114,25 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
             case R.id.back:
                 finish();
                 break;
-            case R.id.sel_file:
+            case R.id.plan_file_btn:
                 if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
                 }else
                     {
-                        SelectFile();
+                        SelectWordFile();
 
                     }
+                break;
+            case R.id.data_file_btn:
+                if (user_type!=null && user_type.equals(Tags.visitor))
+                {
+                    alertDialog.show();
+                }else
+                {
+                    SelectXlsFile();
+
+                }
                 break;
             case R.id.upload_btn:
                 if (user_type!=null && user_type.equals(Tags.visitor))
@@ -137,7 +148,7 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
                 break;
         }
     }
-    private void SelectFile() {
+    private void SelectXlsFile() {
         String [] exten = {"xls","xlsx"};
 
         DialogProperties properties = new DialogProperties();
@@ -154,9 +165,9 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
             @Override
             public void onSelectedFilePaths(String[] files) {
                 Log.e("file",files[0]+"");
-                String filePath = files[0];
-                ta7lelBinding.controlFile.setText(filePath);
-                File file = new File(filePath);
+                file_xls_path = files[0];
+                ta7lelBinding.tvData.setText(file_xls_path.substring(file_xls_path.lastIndexOf("/")+1));
+                File file = new File(file_xls_path);
                 try {
                     InputStream inputStream = new FileInputStream(file);
                     enCodeFile(inputStream);
@@ -172,6 +183,42 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
         intent.setType("file/*");
         startActivityForResult(intent.createChooser(intent,"إختر الملف"),FILE_REQ);*/
     }
+    private void SelectWordFile() {
+        String [] exten = {"doc","docx"};
+
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+        properties.root = new File(DialogConfigs.DEFAULT_DIR);
+        properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = new File(DialogConfigs.DEFAULT_DIR);
+        properties.extensions = exten;
+
+        filePickerDialog = new FilePickerDialog(this,properties);
+        filePickerDialog.setTitle("Select file");
+        filePickerDialog.setDialogSelectionListener(new DialogSelectionListener() {
+            @Override
+            public void onSelectedFilePaths(String[] files) {
+                Log.e("file",files[0]+"");
+                file_word_path = files[0];
+                ta7lelBinding.tvPlan.setText(file_word_path.substring(file_word_path.lastIndexOf("/")+1));
+                File file = new File(file_word_path);
+                try {
+                    InputStream inputStream = new FileInputStream(file);
+                    enCodeFile2(inputStream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        filePickerDialog.show();
+
+        /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("file/*");
+        startActivityForResult(intent.createChooser(intent,"إختر الملف"),FILE_REQ);*/
+    }
+
     private void enCodeFile(InputStream inputStream)
     {
         ByteArrayOutputStream outputStream=null;
@@ -203,16 +250,49 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
         }
 
     }
+    private void enCodeFile2(InputStream inputStream)
+    {
+        ByteArrayOutputStream outputStream=null;
+        byte [] bytes;
+        int len=0;
+        try {
+            outputStream = new ByteArrayOutputStream();
+            bytes = new byte[1024*11];
+
+            while ((len=inputStream.read(bytes))!=-1)
+            {
+                outputStream.write(bytes,0,len);
+            }
+
+            encodedFile2 = Base64.encodeToString(outputStream.toByteArray(),Base64.DEFAULT);
+            Log.e("file",encodedFile2);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                inputStream.close();
+                outputStream.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
     private void upload_file() {
  //       Log.e("user_id",userModel.getUser_id());
 
-        if (encodedFile!=null &&!TextUtils.isEmpty(encodedFile))
+        if (!TextUtils.isEmpty(file_word_path)&& !TextUtils.isEmpty(file_xls_path))
         {
             dialog.show();
             Map<String,String> map = new HashMap<>();
             Log.e("user_id",userModel.getUser_id());
             map.put("user_id_fk",userModel.getUser_id());
-            map.put("requested_file",encodedFile);
+            map.put("requested_file",encodedFile2);
+            map.put("other_requested_file",encodedFile);
+
             Log.e("file",encodedFile);
             Retrofit retrofit = Api.getRetrofit();
             Services services = retrofit.create(Services.class);
@@ -238,10 +318,16 @@ public class Ta7lelActivity extends AppCompatActivity implements Events,UserSing
                     Toast.makeText(Ta7lelActivity.this, R.string.fail_try, Toast.LENGTH_SHORT).show();
                 }
             });
-        }else
+        }else if (TextUtils.isEmpty(file_word_path))
         {
-            Toast.makeText(this, R.string.choose_file, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.choose_plan_file, Toast.LENGTH_LONG).show();
+        }else if (TextUtils.isEmpty(file_xls_path))
+        {
+            Toast.makeText(this, R.string.choose_data_file, Toast.LENGTH_LONG).show();
+
         }
+
+
         }
 
     @Override

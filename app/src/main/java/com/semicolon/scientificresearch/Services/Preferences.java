@@ -27,7 +27,7 @@ public class Preferences {
         editor.putString("user_company",userModel.getCompany());
         editor.putString("user_specialization",userModel.getUser_id());
         editor.apply();
-        CreateSession(Tags.Login_seeion);
+        CreateSession(Tags.Login_session);
 
     }
 
@@ -57,7 +57,7 @@ public class Preferences {
         SharedPreferences.Editor editor = Pref.edit();
         editor.clear();
         editor.apply();
-        CreateSession(Tags.Logout_seeion);
+        CreateSession(Tags.Logout_session);
     }
 
     public void CreateSession(String session)

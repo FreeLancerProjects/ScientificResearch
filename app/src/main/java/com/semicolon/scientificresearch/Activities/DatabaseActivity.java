@@ -60,24 +60,25 @@ public class DatabaseActivity extends AppCompatActivity implements Events{
             case R.id.prev:
                 Intent intent1 = new Intent(this,OtherWebViewActivity.class);
                 intent1.putExtra("url","http://ecat.kfnl.gov.sa:88/hipmain/");
-
                 startActivity(intent1);
                 break;
             case R.id.order:
                 Intent intent2 = new Intent(this,OtherWebViewActivity.class);
                 intent2.putExtra("url","https://sdl.edu.sa/SDLPortal/Publishers.aspx");
-
                 startActivity(intent2);
                 break;
 
             case R.id.king_abdullah:
                 Intent intent3 = new Intent(this,OtherWebViewActivity.class);
                 intent3.putExtra("url","https://uqu.edu.sa/lib");
-
                 startActivity(intent3);
                 break;
             case R.id.back:
                 finish();
+                break;
+            case R.id.other_library:
+                Intent intent4 = new Intent(this,OtherLibrariesActivity.class);
+                startActivity(intent4);
                 break;
         }
     }

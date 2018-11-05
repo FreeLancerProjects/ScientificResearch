@@ -57,13 +57,15 @@ public class LoginActivity extends AppCompatActivity implements Events{
         session = preferences.getSession();
         if (session!=null&&!TextUtils.isEmpty(session))
         {
-            if (session.equals(Tags.Login_seeion))
+            if (session.equals(Tags.Login_session))
             {
                 UserModel userModel = preferences.GetUserData();
                 if (userModel!=null)
                 {
                     userSingleTone.SetUserData(userModel);
                     Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                    intent.putExtra("user_type",Tags.user_app);
+
                     startActivity(intent);
                     finish();
                     return;
@@ -91,15 +93,20 @@ public class LoginActivity extends AppCompatActivity implements Events{
             case R.id.login:
                 Login();
                 break;
-            case R.id.skip:
-                Intent intent = new Intent(this,HomeActivity.class);
-                intent.putExtra("user_type",Tags.visitor);
+            case R.id.tv_forget_password:
+                Intent intent = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
                 startActivity(intent);
                 break;
 
-            case R.id.create_account:
-                Intent intent2 = new Intent(this,RegisterActivity.class);
+            case R.id.skip:
+                Intent intent2 = new Intent(this,HomeActivity.class);
+                intent2.putExtra("user_type",Tags.visitor);
                 startActivity(intent2);
+                break;
+
+            case R.id.create_account:
+                Intent intent3 = new Intent(this,RegisterActivity.class);
+                startActivity(intent3);
                 break;
 
         }
@@ -155,6 +162,7 @@ public class LoginActivity extends AppCompatActivity implements Events{
                                 preferences.CreateSharedPref(userModel);
                                 userSingleTone.SetUserData(userModel);
                                 Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                                intent.putExtra("user_type",Tags.user_app);
                                 startActivity(intent);
                                 finish();
                                 dialog.dismiss();

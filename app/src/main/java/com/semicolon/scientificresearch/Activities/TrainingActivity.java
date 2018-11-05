@@ -23,6 +23,7 @@ import com.semicolon.scientificresearch.Models.UserModel;
 import com.semicolon.scientificresearch.R;
 import com.semicolon.scientificresearch.Services.Api;
 import com.semicolon.scientificresearch.Services.Services;
+import com.semicolon.scientificresearch.Services.Tags;
 import com.semicolon.scientificresearch.SingleTone.UserSingleTone;
 import com.semicolon.scientificresearch.databinding.ActivityTrainingBinding;
 
@@ -111,13 +112,21 @@ public class TrainingActivity extends AppCompatActivity implements Events,UserSi
     @Override
     protected void onStart() {
         super.onStart();
-        getData();
+        if (user_type.equals(Tags.visitor))
+        {
+            getData("all");
+
+        }else if (user_type.equals(Tags.user_app))
+        {
+            getData(userModel.getUser_id());
+
+        }
     }
 
-    private void getData() {
+    private void getData(String user_id) {
         Retrofit retrofit = Api.getRetrofit();
         Services services = retrofit.create(Services.class);
-        Call<List<TrainingModel>> call = services.TrainingData();
+        Call<List<TrainingModel>> call = services.TrainingData(user_id);
         call.enqueue(new Callback<List<TrainingModel>>() {
             @Override
             public void onResponse(Call<List<TrainingModel>> call, Response<List<TrainingModel>> response) {
@@ -132,6 +141,8 @@ public class TrainingActivity extends AppCompatActivity implements Events,UserSi
 
             @Override
             public void onFailure(Call<List<TrainingModel>> call, Throwable t) {
+                trainingBinding.progBar.setVisibility(View.GONE);
+
                 Toast.makeText(TrainingActivity.this, R.string.netconn, Toast.LENGTH_SHORT).show();
                 Log.e("Error",t.getMessage());
             }

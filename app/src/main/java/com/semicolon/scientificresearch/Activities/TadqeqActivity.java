@@ -111,7 +111,7 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
         int id = view.getId();
         switch (id)
         {
-            case R.id.sel_file:
+            case R.id.ch_file:
                 if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
@@ -138,8 +138,6 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
     }
 
     private void upload_file() {
-        Log.e("user_id",userModel.getUser_id());
-
         if (!TextUtils.isEmpty(encodedFile) && encodedFile!=null)
         {
             dialog.show();
@@ -151,7 +149,7 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
             Log.e("file",encodedFile);
             Retrofit retrofit = Api.getRetrofit();
             Services services = retrofit.create(Services.class);
-            Call<ResponseModel> call = services.UploadTranslateFile(map);
+            Call<ResponseModel> call = services.UploadTadqeeqFile(map);
             call.enqueue(new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -186,33 +184,6 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
     }
 
     private void SelectFile() {
-       /* Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("file/*");*/
-
-
-//        String[] mimeTypes =
-//                {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
-//                        "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-//                };
-//
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            intent.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
-//            if (mimeTypes.length > 0) {
-//                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-//            }
-//        } else {
-//            String mimeTypesStr = "";
-//            for (String mimeType : mimeTypes) {
-//                mimeTypesStr += mimeType + "|";
-//            }
-//            intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
-//        }
-       // startActivityForResult(intent.createChooser(intent,"إختر الملف"),FILE_REQ);
-
         String [] exten = {"doc","docx"};
         DialogProperties properties = new DialogProperties();
         properties.selection_mode = DialogConfigs.SINGLE_MODE;
@@ -229,7 +200,10 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
             public void onSelectedFilePaths(String[] files) {
                 Log.e("file",files[0]+"");
                 String filePath = files[0];
-                tadqeqBinding.fileName.setText(filePath);
+                String name  = filePath.substring(filePath.lastIndexOf("/")+1);
+                Log.e("name",name);
+                tadqeqBinding.file.setText(name);
+
                 File file = new File(filePath);
                 try {
                     InputStream inputStream = new FileInputStream(file);
@@ -242,24 +216,7 @@ public class TadqeqActivity extends AppCompatActivity implements Events,UserSing
         filePickerDialog.show();
     }
 
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FILE_REQ && resultCode == RESULT_OK && data != null)
-        {
-            Uri uri = data.getData();
-            exten = getContentResolver().getType(uri);
-            Log.e("type",exten);
-            try {
-                enCodeFile(getContentResolver().openInputStream(uri));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            tadqeqBinding.fileName.setText(String.valueOf(uri));
-            Log.e("uri",uri.toString()+"");
 
-        }
-    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {

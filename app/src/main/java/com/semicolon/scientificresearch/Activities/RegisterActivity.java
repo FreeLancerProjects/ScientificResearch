@@ -252,6 +252,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
                 map.put("degree",degree);
                 map.put("company",organization);
                 map.put("specialization",user_specialization);
+                map.put("user_token_id","");
                 map.put("user_type",user_Type);
 
                 registerBinding.userPassword.setError(null);
@@ -271,6 +272,7 @@ public class RegisterActivity extends AppCompatActivity implements Events{
                             preferences.CreateSharedPref(userModel);
                             userSingleTone.SetUserData(userModel);
                             Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
+                            intent.putExtra("user_type",Tags.user_app);
                             startActivity(intent);
                             finish();
                             dialog.dismiss();

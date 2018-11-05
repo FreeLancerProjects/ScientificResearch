@@ -1,33 +1,65 @@
 package com.semicolon.scientificresearch.Activities;
 
+import android.app.NotificationManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.semicolon.scientificresearch.Adapters.NotificationAdapter;
 import com.semicolon.scientificresearch.EventListener.Events;
+import com.semicolon.scientificresearch.Models.NotificationCount;
+import com.semicolon.scientificresearch.Models.NotificationModel;
+import com.semicolon.scientificresearch.Models.ResponseModel;
 import com.semicolon.scientificresearch.Models.UserModel;
 import com.semicolon.scientificresearch.R;
+import com.semicolon.scientificresearch.Services.Api;
 import com.semicolon.scientificresearch.Services.Preferences;
+import com.semicolon.scientificresearch.Services.Services;
 import com.semicolon.scientificresearch.Services.Tags;
 import com.semicolon.scientificresearch.SingleTone.UserSingleTone;
 import com.semicolon.scientificresearch.databinding.ActivityHomeBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.anwarshahriar.calligrapher.Calligrapher;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity implements Events,UserSingleTone.UserDataInterface{
     private ActivityHomeBinding homeBinding;
     private UserSingleTone userSingleTone;
     private UserModel userModel;
     private AlertDialog alertDialog;
+    private ProgressDialog progressDialog;
     private Preferences preferences;
     private String user_type;
+    private BottomSheetBehavior behavior;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager manager;
+    private List<NotificationModel> notificationModelList;
+    private int not_count=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +67,72 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
         homeBinding = DataBindingUtil.setContentView(this,R.layout.activity_home);
         homeBinding.setEvent(this);
         setSupportActionBar(homeBinding.toolBar);
+        notificationModelList = new ArrayList<>();
         preferences = new Preferences(this);
         userSingleTone = UserSingleTone.getInstance();
         userSingleTone.GetUserData(this);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"JannaLT-Regular.ttf",true);
+
         Log.e("home","Home");
+        manager = new LinearLayoutManager(this);
+        homeBinding.recView.setLayoutManager(manager);
+        homeBinding.recView.setNestedScrollingEnabled(true);
+        adapter = new NotificationAdapter(notificationModelList,this);
+        homeBinding.recView.setAdapter(adapter);
+        behavior = BottomSheetBehavior.from(homeBinding.root);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState==BottomSheetBehavior.STATE_DRAGGING)
+                {
+                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
         CreateLogOutAlert();
-        getDatafromIntent();
+        getDataFromIntent();
     }
 
-    private void getDatafromIntent() {
+    private void getDataFromIntent() {
         Intent intent = getIntent();
         if (intent!=null)
         {
             if (intent.hasExtra("user_type"))
             {
                 user_type = intent.getStringExtra("user_type");
+                updateUI(user_type);
             }
+        }
+    }
+
+    private void updateUI(String user_type) {
+        if (user_type.equals(Tags.user_app))
+        {
+            homeBinding.flNot.setVisibility(View.VISIBLE);
+            getUnreadNotification(userModel.getUser_id());
+            getNotifications(userModel.getUser_id());
+            FirebaseInstanceId.getInstance()
+                    .getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (task.isSuccessful())
+                            {
+                                String token =task.getResult().getToken();
+                                UpdateToken(userModel.getUser_id(),token);
+                            }
+                        }
+                    });
+        }else if (user_type.equals(Tags.visitor))
+        {
+            homeBinding.flNot.setVisibility(View.GONE);
+
         }
     }
 
@@ -62,8 +142,9 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        LogOut();
                         alertDialog.dismiss();
+                        CreateProgressDialog(getString(R.string.logning_out));
+                        LogOut();
                     }
                 }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
@@ -75,12 +156,178 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
     }
 
     private void LogOut() {
-        preferences.clearPref();
-        Intent intent = new Intent(this,LoginActivity.class);
-        startActivity(intent);
-        finish();
+
+        Api.getRetrofit()
+                .create(Services.class)
+                .logOut(userModel.getUser_id())
+                .enqueue(new Callback<ResponseModel>() {
+                    @Override
+                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                        if (response.isSuccessful())
+                        {
+                            if (response.body().getMessage()==1)
+                            {
+
+                                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                manager.cancelAll();
+                                preferences.clearPref();
+                                userSingleTone.Clear();
+                                progressDialog.dismiss();
+                                Intent intent = new Intent(HomeActivity.this,LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseModel> call, Throwable t) {
+
+                    }
+                });
+
+
     }
 
+    private void UpdateNotificationCount(int count)
+    {
+        if (count>0)
+        {
+            homeBinding.tvNot.setVisibility(View.VISIBLE);
+            homeBinding.tvNot.setText(String.valueOf(count));
+            not_count=1;
+
+        }else
+            {
+                not_count=0;
+
+                homeBinding.tvNot.setVisibility(View.GONE);
+
+            }
+    }
+
+    private void getUnreadNotification(String user_id)
+    {
+        Api.getRetrofit()
+                .create(Services.class)
+                .getNotificationCount(user_id)
+                .enqueue(new Callback<NotificationCount>() {
+                    @Override
+                    public void onResponse(Call<NotificationCount> call, Response<NotificationCount> response) {
+                        if (response.isSuccessful())
+                        {
+                            UpdateNotificationCount(response.body().getCount_unread());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<NotificationCount> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                        Toast.makeText(HomeActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void getNotifications(String user_id)
+    {
+        Api.getRetrofit().create(Services.class)
+                .getNotification(user_id)
+                .enqueue(new Callback<List<NotificationModel>>() {
+                    @Override
+                    public void onResponse(Call<List<NotificationModel>> call, Response<List<NotificationModel>> response) {
+
+                        if (response.isSuccessful())
+                        {
+                            homeBinding.progBar.setVisibility(View.GONE);
+                            if (response.body().size()>0)
+                            {
+                                notificationModelList.addAll(response.body());
+                                adapter.notifyDataSetChanged();
+                                homeBinding.llNoNot.setVisibility(View.VISIBLE);
+                            }else
+                            {
+                                homeBinding.llNoNot.setVisibility(View.GONE);
+
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<NotificationModel>> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                        Toast.makeText(HomeActivity.this,R.string.something, Toast.LENGTH_SHORT).show();
+                        homeBinding.progBar.setVisibility(View.GONE);
+
+                    }
+                });
+    }
+
+    private void readNotification(String user_id)
+    {
+        Api.getRetrofit()
+                .create(Services.class)
+                .readNotification(user_id)
+                .enqueue(new Callback<ResponseModel>() {
+                    @Override
+                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                        if (response.isSuccessful())
+                        {
+                            if (response.body().getMessage()==1)
+                            {
+                                UpdateNotificationCount(0);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseModel> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                    }
+                });
+    }
+
+    private void UpdateToken(String user_id,String token)
+    {
+        Api.getRetrofit()
+                .create(Services.class)
+                .updateToken(user_id,token)
+                .enqueue(new Callback<ResponseModel>() {
+                    @Override
+                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+
+                        if (response.isSuccessful())
+                        {
+                            if (response.body().getMessage()==1)
+                            {
+                                Log.e("Token","updated successfully");
+                            }else
+                                {
+                                    Log.e("Token","not updated");
+
+                                }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseModel> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                    }
+                });
+    }
+
+    private void CreateProgressDialog(String msg)
+    {
+        ProgressBar bar = new ProgressBar(this);
+        Drawable drawable = bar.getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(msg);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminateDrawable(drawable);
+        progressDialog.show();
+    }
 
     @Override
     public void onClickListener(View view) {
@@ -99,8 +346,8 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
                 startActivity(intent2);
                 break;
             case R.id.btn_tawf:
-                Intent intent3 = new Intent(this,OtherWebViewActivity.class);
-                intent3.putExtra("url","http://www.bibme.org/items/new");
+                Intent intent3 = new Intent(this,TawtheeqActivity.class);
+                intent3.putExtra("user_type",user_type);
                 startActivity(intent3);
                 break;
             case R.id.btn_t7:
@@ -110,8 +357,10 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
                 startActivity(intent4);
                 break;
             case R.id.btn_tad:
-                Intent intent5 = new Intent(this,OtherWebViewActivity.class);
-                intent5.putExtra("url","https://www.bibme.org/grammar-and-plagiarism/?=bmp_BM.A.300-250&intcid=wt.BibMe.BM.A.300-250&inhousead=BM.A.300-250");
+                Intent intent5 = new Intent(this,TadqeqActivity.class);
+                intent5.putExtra("user_type",user_type);
+
+                //intent5.putExtra("url","https://www.bibme.org/grammar-and-plagiarism/?=bmp_BM.A.300-250&intcid=wt.BibMe.BM.A.300-250&inhousead=BM.A.300-250");
                 startActivity(intent5);
                 break;
             case R.id.btn_control:
@@ -135,34 +384,34 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
                 intent9.putExtra("user_type",user_type);
                 startActivity(intent9);
                 break;
-
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id)
-        {
+            case R.id.btn_service:
+                Intent intent10 = new Intent(this,ConsultingActivity.class);
+                intent10.putExtra("user_type",user_type);
+                startActivity(intent10);
+                break;
+            case R.id.flNot :
+                if (not_count==1)
+                {
+                    readNotification(userModel.getUser_id());
+                }
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                break;
             case R.id.logout:
                 if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     finish();
                 }else
-                    {
-                        alertDialog.show();
+                {
+                    alertDialog.show();
 
-                    }
+                }
                 break;
+
         }
-        return super.onOptionsItemSelected(item);
     }
+
+
+
 
     @Override
     public void getUserData(UserModel userModel) {

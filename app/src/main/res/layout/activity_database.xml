@@ -10,7 +10,7 @@
     </data>
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     tools:context="com.semicolon.scientificresearch.Activities.EfadaOrderActivity">
@@ -19,7 +19,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
         <android.support.design.widget.AppBarLayout
@@ -62,86 +62,77 @@
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
-            android:id="@+id/prev"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/database_yellow"
-            android:layout_marginTop="30dp"
-            android:gravity="center_horizontal"
-            android:clickable="true"
-            android:onClick="@{event::onClickListener}"
-
-
+            android:weightSum="4"
 
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/holo_red_dark"
+            <Button
+                android:id="@+id/prev"
+
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/lib_btn_bg"
                 android:text="مكتبة الملك فهد"
-                android:textSize="15sp"
-                android:clickable="false"
-                android:longClickable="false"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/database_blue"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:clickable="true"
-            android:onClick="@{event.onClickListener}"
-
-
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:onClick="@{event::onClickListener}"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                />
+            <Button
+                android:id="@+id/order"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/lib_btn_bg"
                 android:text="المكتبة الرقمية السعودية"
-                android:textSize="15sp"
-                android:clickable="false"
-                android:longClickable="false"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/king_abdullah"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/database_yellow"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:clickable="true"
-            android:onClick="@{event.onClickListener}"
-
-
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:onClick="@{event.onClickListener}"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                />
+            <Button
+                android:id="@+id/king_abdullah"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/lib_btn_bg"
                 android:text="مكتبة الملك عبد الله الرقمية"
-                android:textSize="15sp"
-                android:clickable="false"
-                android:longClickable="false"
+                android:onClick="@{event.onClickListener}"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                />
+            <Button
+                android:id="@+id/other_library"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/lib_btn_bg"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="مكتبات اخرى"
+                android:onClick="@{event.onClickListener}"
 
                 />
-
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
 </layout>

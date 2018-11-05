@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">الباحث</string>
+    <string name="app_name">باحث</string>
     <string name="upload_file">جار رفع الملف...</string>
     <string name="close">إغلاق</string>
     <string name="ser_not_av">هذه الخدمة غير متاحة للزائرين عليك بإنشاء حساب وتسجيل الدخول</string>
@@ -33,15 +33,15 @@
     <string name="upl">رفع</string>
     <string name="samples">العينات</string>
     <string name="arbitration">التحكيم</string>
-    <string name="database">قواعد البيانات</string>
+    <string name="database">مكتبات</string>
     <string name="free_trans">ترجمة مجانية</string>
     <string name="researc">باحث</string>
     <string name="trans">ترجمة</string>
     <string name="traning">تدريب</string>
     <string name="audit">تدقيق</string>
-    <string name="documentation">التوثيق</string>
+    <string name="documentation">التوثيق APA</string>
     <string name="statistical_analyst">تحليل احصائي</string>
-    <string name="serv">خدمات</string>
+    <string name="serv">إستشارات</string>
     <string name="quotation">إقتباس</string>
     <string name="user_email">إسم المستخدم أو البريد الالكتروني</string>
     <string name="pass">كلمة المرور</string>
@@ -77,6 +77,34 @@
     <string name="mname">راضي بن محيسن الشمري</string>
     <string name="bank">البنك</string>
     <string name="rajhi">الراحجي</string>
+    <string name="ch_file">قم بتحميل الملف المطلوب هنا</string>
+    <string name="home">الرئيسية</string>
+    <string name="logOut">خروج</string>
+    <string name="c_file">إختر ملف</string>
+    <string name="Other_libs">مكتبات اخرى</string>
+    <string name="consulting">إستشارات</string>
+    <string name="vid">فيديوهات</string>
+    <string name="rcov_pass_msg">إسترداد حسابك .سيتم ارسال رسالة لك من خلال رابط سيتم ارسالة لك على البريد الالكتروني.</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="reset_password">إستعادة كلمة المرور</string>
+    <string name="email_req">البريد الالكتروني مطلوب</string>
+    <string name="forget_password">نسيت كلمة المرور ؟</string>
+    <string name="choose_plan_file">إختر ملف الخطة</string>
+    <string name="choose_data_file">إختر ملف البيانات</string>
+    <string name="doc">توثيق</string>
+    <string name="review_ref">مراجعة توثيق المراجع فقط</string>
+    <string name="wrt_ref">كتابة المراجع بطريقة APA</string>
+    <string name="ch_file_type">إختر نوع الملف</string>
+    <string name="review_plan_research">مراجعة خطة البحث</string>
+    <string name="rev_ent_search">مراجعة البحث كاملا</string>
+    <string name="research_consulting">إستشارات بحثة</string>
+    <string name="format_search">تنسيق البحث</string>
+    <string name="plz_inst_wa">قم بتحميل تطبيق الواتس اب اولا</string>
+    <string name="something">خطأ حاول مرة اخرى لا حقا</string>
+    <string name="no_not">لا توجد إشعارات لعرضها</string>
+    <string name="logning_out">جار تسجيل الخروج...</string>
+    <string name="wait">إنتظر قليلا...</string>
+    <string name="ok2">حسنا</string>
 
 
     <array name="user_type">

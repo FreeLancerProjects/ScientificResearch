@@ -30,4 +30,10 @@ public class UserSingleTone {
         this.userDataInterface = userDataInterface;
         this.userDataInterface.getUserData(userModel);
     }
+
+    public void Clear()
+    {
+        userModel=null;
+        SetUserData(userModel);
+    }
 }

@@ -11,11 +11,14 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.semicolon.scientificresearch.Adapters.TrainingVideoAdapter;
 import com.semicolon.scientificresearch.EventListener.Events;
 import com.semicolon.scientificresearch.Models.ResponseModel;
 import com.semicolon.scientificresearch.Models.TrainingModel;
@@ -45,6 +48,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements Events,U
     private UserSingleTone singleTone;
     private String user_type="";
     private AlertDialog alertDialog;
+    private RecyclerView.LayoutManager manager;
+    private RecyclerView.Adapter adapter;
 
 
 
@@ -57,9 +62,14 @@ public class CourseDetailsActivity extends AppCompatActivity implements Events,U
         detailsBinding.setEvent(this);
         singleTone = UserSingleTone.getInstance();
         singleTone.GetUserData(this);
+
         getDataFromIntent();
         CreateProgDialog();
         CreateAlertDialog();
+
+        manager = new LinearLayoutManager(this);
+        detailsBinding.recView.setLayoutManager(manager);
+        detailsBinding.recView.setNestedScrollingEnabled(true);
     }
 
     private void CreateAlertDialog() {
@@ -78,11 +88,45 @@ public class CourseDetailsActivity extends AppCompatActivity implements Events,U
         {
             trainingModel = (TrainingModel) intent.getSerializableExtra("details");
             user_type = intent.getStringExtra("user_type");
-
-            detailsBinding.setTranModel(trainingModel);
-            Picasso.with(this).load(Uri.parse(Tags.ImgPath+trainingModel.getCourse_image())).into(detailsBinding.courseImage);
+            UpdateUI(user_type,trainingModel);
         }
     }
+
+    private void UpdateUI(String user_type, TrainingModel trainingModel) {
+        if (user_type.equals(Tags.visitor))
+        {
+            detailsBinding.cardVideo.setVisibility(View.GONE);
+
+        }else if (user_type.equals(Tags.user_app))
+        {
+            detailsBinding.cardVideo.setVisibility(View.VISIBLE);
+            UpdateAdapter(trainingModel);
+
+        }
+
+        if (trainingModel.getReservation()==1)
+        {
+            detailsBinding.reserve.setVisibility(View.GONE);
+        }else if (trainingModel.getReservation()==0)
+        {
+            detailsBinding.reserve.setVisibility(View.VISIBLE);
+
+        }
+
+
+        detailsBinding.setTranModel(trainingModel);
+        Picasso.with(this).load(Uri.parse(Tags.ImgPath+ this.trainingModel.getCourse_image())).into(detailsBinding.courseImage);
+
+    }
+
+    private void UpdateAdapter(TrainingModel trainingModel) {
+
+        adapter = new TrainingVideoAdapter(trainingModel.getCourses_video(),this);
+        detailsBinding.recView.setAdapter(adapter);
+
+    }
+
+
 
     private void CreateProgDialog()
     {
@@ -105,14 +149,18 @@ public class CourseDetailsActivity extends AppCompatActivity implements Events,U
                 finish();
                 break;
             case R.id.reserve:
-                if (user_type!=null && user_type.equals(Tags.visitor))
+                if (user_type!=null)
                 {
-                    alertDialog.show();
-                }else
+                    if (user_type.equals(Tags.visitor))
                     {
-                        RequestCourse(trainingModel.getCourse_id_pk(),userModel.getUser_id());
+                        alertDialog.show();
 
-                    }
+                    }else
+                        {
+                            RequestCourse(trainingModel.getCourse_id_pk(),userModel.getUser_id());
+
+                        }
+                }
                 break;
         }
 
@@ -172,5 +220,11 @@ public class CourseDetailsActivity extends AppCompatActivity implements Events,U
     @Override
     public void getUserData(UserModel userModel) {
         this.userModel = userModel;
+    }
+
+    public void setItem(TrainingModel.VideoModel videoModel) {
+        Intent intent = new Intent(this,VideoViewActivity.class);
+        intent.putExtra("data",videoModel);
+        startActivity(intent);
     }
 }

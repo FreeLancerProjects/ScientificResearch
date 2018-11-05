@@ -112,7 +112,7 @@ public class EqtbasActivity extends AppCompatActivity implements Events,UserSing
         int id = view.getId();
         switch (id)
         {
-            case R.id.sel_file:
+            case R.id.ch_file:
                 if (user_type!=null && user_type.equals(Tags.visitor))
                 {
                     alertDialog.show();
@@ -199,7 +199,8 @@ public class EqtbasActivity extends AppCompatActivity implements Events,UserSing
             public void onSelectedFilePaths(String[] files) {
                 Log.e("file",files[0]+"");
                 String filePath = files[0];
-                eqtbasBinding.controlFile.setText(filePath);
+                eqtbasBinding.controlFile.setText(filePath.substring(filePath.lastIndexOf("/")+1));
+
                 File file = new File(filePath);
                 try {
                     InputStream inputStream = new FileInputStream(file);
