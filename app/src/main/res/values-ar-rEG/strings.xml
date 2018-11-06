@@ -107,6 +107,7 @@
     <string name="ok2">حسنا</string>
     <string name="transl">ترجمة</string>
     <string name="citation">إقتباس</string>
+    <string name="mail_not_reg">هذا البريد لم يسجل به من قبل</string>
 
 
     <array name="user_type">

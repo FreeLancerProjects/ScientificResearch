@@ -92,7 +92,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements Events{
                                 CreateAlertDialog();
                             }else
                                 {
-                                    Toast.makeText(ForgetPasswordActivity.this,R.string.something, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ForgetPasswordActivity.this, R.string.mail_not_reg, Toast.LENGTH_LONG).show();
 
                                 }
                         }

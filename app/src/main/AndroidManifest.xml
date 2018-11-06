@@ -74,7 +74,10 @@
         <activity android:name=".Activities.OtherLibrariesActivity" />
         <activity android:name=".Activities.ConsultingActivity" />
         <activity android:name=".Activities.PaidTranslationActivity" />
-        <activity android:name=".Activities.ForgetPasswordActivity" />
+        <activity android:name=".Activities.ForgetPasswordActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+
+            />
         <activity android:name=".Activities.ReviewPlanSearchActivity" />
         <activity android:name=".Activities.ReviewFullSearchActivity" />
         <activity android:name=".Activities.FormatSearchActivity" />
