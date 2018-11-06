@@ -12,8 +12,7 @@ import com.semicolon.scientificresearch.R;
 import com.semicolon.scientificresearch.Services.Tags;
 import com.semicolon.scientificresearch.databinding.ActivityVideoViewBinding;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
+import cn.jzvd.Jzvd;
 
 
 public class VideoViewActivity extends AppCompatActivity implements Events {
@@ -43,7 +42,13 @@ public class VideoViewActivity extends AppCompatActivity implements Events {
 
     private void UpdateUI(TrainingModel.VideoModel videoModel) {
         binding.tvTitle.setText(videoModel.getVideo_title());
-
+        //binding.imgPlayBtn.setVisibility(View.GONE);
+        binding.videoplayer.setUp(Tags.video_path+videoModel.getVideo()
+                , videoModel.getVideo_title() , Jzvd.SCREEN_WINDOW_NORMAL);
+        binding.videoplayer.batteryLevel.setVisibility(View.GONE);
+        binding.videoplayer.bottomProgressBar.setVisibility(View.VISIBLE);
+        binding.videoplayer.loadingProgressBar.setVisibility(View.VISIBLE);
+        binding.videoplayer.loadingProgressBar.setIndeterminate(true);
 
 
     }
@@ -51,25 +56,28 @@ public class VideoViewActivity extends AppCompatActivity implements Events {
     @Override
     public void onClickListener(View view) {
         int id = view.getId();
-        if (id==R.id.imgPlayBtn)
+        /*if (id==R.id.imgPlayBtn)
         {
-            binding.imgPlayBtn.setVisibility(View.GONE);
-            binding.videoView.setVideoUrl(Tags.video_path+videoModel.getVideo());
-            binding.videoView.setAutoplay(false);
-            binding.videoView.setAutoplay(true);
-            binding.videoView.setOnVideoFinishedListener(new Function0<Unit>() {
-                @Override
-                public Unit invoke() {
-                    binding.imgPlayBtn.setVisibility(View.GONE);
-                    return null;
-                }
-            });
 
-        }else if (id==R.id.back)
+
+
+        }else*/ if (id==R.id.back)
         {
             finish();
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (Jzvd.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Jzvd.releaseAllVideos();
+    }
 }
 //https://github.com/MarcinMoskala/VideoPlayView/raw/master/videos/cat1.mp4"

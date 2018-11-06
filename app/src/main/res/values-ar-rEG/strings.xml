@@ -77,8 +77,8 @@
     <string name="mname">راضي بن محيسن الشمري</string>
     <string name="bank">البنك</string>
     <string name="rajhi">الراحجي</string>
-    <string name="ch_file">قم بتحميل الملف المطلوب هنا</string>
-    <string name="home">الرئيسية</string>
+    <string name="ch_file">قم بتحميل الملف بصيغه الوورد هنا</string>
+    <string name="home">باحث</string>
     <string name="logOut">خروج</string>
     <string name="c_file">إختر ملف</string>
     <string name="Other_libs">مكتبات اخرى</string>
@@ -108,6 +108,7 @@
     <string name="transl">ترجمة</string>
     <string name="citation">إقتباس</string>
     <string name="mail_not_reg">هذا البريد لم يسجل به من قبل</string>
+    <string name="ch_xls_file">قم بتحميل ملف بصيغة إكسل</string>
 
 
     <array name="user_type">

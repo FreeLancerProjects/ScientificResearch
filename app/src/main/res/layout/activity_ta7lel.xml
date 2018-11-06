@@ -85,7 +85,7 @@
                     android:layout_marginTop="50dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:text="@string/ch_file"
+                    android:text="@string/ch_xls_file"
                     android:gravity="center"
                     android:textStyle="bold"
 

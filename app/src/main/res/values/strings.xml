@@ -75,8 +75,8 @@
     <string name="mname">Radi bin Moheisen Al Shammari</string>
     <string name="bank">Bank</string>
     <string name="rajhi">Al Rajhi Bank</string>
-    <string name="ch_file">Choose File</string>
-    <string name="home">Home</string>
+    <string name="ch_file">Choose Word File</string>
+    <string name="home">Researcher</string>
     <string name="logOut">Logout</string>
     <string name="c_file">Choose file</string>
     <string name="Other_libs">Other Libraries</string>
@@ -106,6 +106,7 @@
     <string name="transl">Translation</string>
     <string name="citation">citation</string>
     <string name="mail_not_reg">Your email is not registered</string>
+    <string name="ch_xls_file">Choose excel file</string>
 
     <array name="user_type">
         <item>statistical analyst</item>
