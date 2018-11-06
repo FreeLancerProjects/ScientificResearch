@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
     private void updateUI(String user_type) {
         if (user_type.equals(Tags.user_app))
         {
-            homeBinding.flNot.setVisibility(View.VISIBLE);
+            //homeBinding.flNot.setVisibility(View.VISIBLE);
             getUnreadNotification(userModel.getUser_id());
             getNotifications(userModel.getUser_id());
             FirebaseInstanceId.getInstance()
@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
                     });
         }else if (user_type.equals(Tags.visitor))
         {
-            homeBinding.flNot.setVisibility(View.GONE);
+            //homeBinding.flNot.setVisibility(View.GONE);
 
         }
     }
@@ -243,10 +243,10 @@ public class HomeActivity extends AppCompatActivity implements Events,UserSingle
                             {
                                 notificationModelList.addAll(response.body());
                                 adapter.notifyDataSetChanged();
-                                homeBinding.llNoNot.setVisibility(View.VISIBLE);
+                                homeBinding.llNoNot.setVisibility(View.GONE);
                             }else
                             {
-                                homeBinding.llNoNot.setVisibility(View.GONE);
+                                homeBinding.llNoNot.setVisibility(View.VISIBLE);
 
                             }
                         }

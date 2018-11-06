@@ -5,14 +5,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.angads25.filepicker.controller.DialogSelectionListener;
@@ -55,7 +59,7 @@ public class TawtheeqActivity extends AppCompatActivity implements Events,UserSi
     private FilePickerDialog filePickerDialog;
     private String user_type="";
     private AlertDialog alertDialog;
-    private String file_type="";
+    private static String file_type="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +69,23 @@ public class TawtheeqActivity extends AppCompatActivity implements Events,UserSi
         tawfeeqBinding.setEvent(this);
         userSingleTone = UserSingleTone.getInstance();
         userSingleTone.GetUserData(this);
+        CreateProgDialog();
         CreateAlertDialog();
         getDataFromIntent();
     }
 
+    private void CreateProgDialog()
+    {
+        ProgressBar bar = new ProgressBar(this);
+        Drawable drawable = bar.getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(this,R.color.ko7ly), PorterDuff.Mode.SRC_IN);
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.upload_file));
+        dialog.setIndeterminateDrawable(drawable);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+
+    }
     private void getDataFromIntent() {
         Intent intent = getIntent();
         if (intent!=null)
@@ -119,10 +136,22 @@ public class TawtheeqActivity extends AppCompatActivity implements Events,UserSi
                 break;
 
             case R.id.rbReview:
-                file_type="1";
+                if (tawfeeqBinding.rbReview.isChecked())
+                {
+                    file_type="1";
+
+                }
+                Log.e("file type",file_type);
+
                 break;
             case R.id.rbWrite:
-                file_type="2";
+                if (tawfeeqBinding.rbWrite.isChecked())
+                {
+                    file_type="2";
+
+                }
+                Log.e("file type2",file_type);
+
                 break;
 
             case R.id.ch_file:

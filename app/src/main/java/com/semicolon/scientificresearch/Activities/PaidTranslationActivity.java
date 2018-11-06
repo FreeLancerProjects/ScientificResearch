@@ -48,7 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class UploadActivity extends AppCompatActivity implements Events,UserSingleTone.UserDataInterface{
+public class PaidTranslationActivity extends AppCompatActivity implements Events,UserSingleTone.UserDataInterface{
 
     ActivityUploadBinding activityUploadBinding;
     private ProgressDialog dialog;
@@ -160,7 +160,7 @@ public class UploadActivity extends AppCompatActivity implements Events,UserSing
             Log.e("file",encodedFile);
             Retrofit retrofit = Api.getRetrofit();
             Services services = retrofit.create(Services.class);
-            Call<ResponseModel> call = services.UploadTa7keemFile(map);
+            Call<ResponseModel> call = services.UploadTranslateFile(map);
             call.enqueue(new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -169,7 +169,7 @@ public class UploadActivity extends AppCompatActivity implements Events,UserSing
                         if (response.body().getMessage()==1)
                         {
                             dialog.dismiss();
-                            Toast.makeText(UploadActivity.this, R.string.file_uploaded, Toast.LENGTH_LONG).show();
+                            Toast.makeText(PaidTranslationActivity.this, R.string.file_uploaded, Toast.LENGTH_LONG).show();
                             finish();
                         }
                     }
@@ -179,7 +179,7 @@ public class UploadActivity extends AppCompatActivity implements Events,UserSing
                 public void onFailure(Call<ResponseModel> call, Throwable t) {
                     dialog.dismiss();
                     Log.e("Error",t.getMessage());
-                    Toast.makeText(UploadActivity.this, R.string.fail_try, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PaidTranslationActivity.this, R.string.fail_try, Toast.LENGTH_SHORT).show();
                 }
             });
         }else
@@ -237,7 +237,7 @@ public class UploadActivity extends AppCompatActivity implements Events,UserSing
                 }
                 else {
                     //Permission has not been granted. Notify the user.
-                    Toast.makeText(UploadActivity.this,"Permission is Required for getting list of files",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PaidTranslationActivity.this,"Permission is Required for getting list of files",Toast.LENGTH_SHORT).show();
                 }
             }
         }

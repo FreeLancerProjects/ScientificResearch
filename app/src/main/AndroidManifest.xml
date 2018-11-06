@@ -73,7 +73,7 @@
         <activity android:name=".Activities.EqtbasActivity" />
         <activity android:name=".Activities.OtherLibrariesActivity" />
         <activity android:name=".Activities.ConsultingActivity" />
-        <activity android:name=".Activities.UploadActivity" />
+        <activity android:name=".Activities.PaidTranslationActivity" />
         <activity android:name=".Activities.ForgetPasswordActivity" />
         <activity android:name=".Activities.ReviewPlanSearchActivity" />
         <activity android:name=".Activities.ReviewFullSearchActivity" />

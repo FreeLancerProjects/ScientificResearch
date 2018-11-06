@@ -343,6 +343,7 @@
             app:behavior_hideable="true"
             app:behavior_peekHeight="0dp"
             android:id="@+id/root"
+            android:background="@color/gray2"
             >
             <FrameLayout
                 android:layout_width="match_parent"

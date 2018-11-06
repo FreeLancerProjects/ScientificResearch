@@ -61,7 +61,7 @@
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:textSize="17sp"
-                    android:text="ترجمة"
+                    android:text="@string/transl"
                     />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>

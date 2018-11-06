@@ -44,20 +44,6 @@ public class ConsultingActivity extends AppCompatActivity implements Events{
         switch (id)
         {
             case R.id.btn1:
-                Intent intent1 = new Intent(this,UploadActivity.class);
-                intent1.putExtra("user_type",user_type);
-                intent1.putExtra("type","5");
-
-                intent1.putExtra("title",activityConsultingBinding.btn1.getText().toString());
-                startActivity(intent1);
-                break;
-            case R.id.btn2:
-                Intent intent2 = new Intent(this,ReviewPlanSearchActivity.class);
-                intent2.putExtra("user_type",user_type);
-                startActivity(intent2);
-
-                break;
-            case R.id.btn3:
                 if (isWhatsApp_installed())
                 {
                     String phone_number = "+050 5243083";
@@ -73,12 +59,23 @@ public class ConsultingActivity extends AppCompatActivity implements Events{
                     }
                     startActivity(sendIntent);
                 }else
-                    {
-                        Toast.makeText(this, R.string.plz_inst_wa, Toast.LENGTH_SHORT).show();
-                    }
+                {
+                    Toast.makeText(this, R.string.plz_inst_wa, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.btn2:
+                Intent intent2 = new Intent(this,ReviewPlanSearchActivity.class);
+                intent2.putExtra("user_type",user_type);
+                startActivity(intent2);
+
+                break;
+            case R.id.btn3:
+                Intent intent3 = new Intent(this,ReviewFullSearchActivity.class);
+                intent3.putExtra("user_type",user_type);
+                startActivity(intent3);
                 break;
             /*case R.id.btn4:
-                Intent intent4 = new Intent(this,UploadActivity.class);
+                Intent intent4 = new Intent(this,PaidTranslationActivity.class);
                 intent4.putExtra("user_type",user_type);
                 intent4.putExtra("type","8");
 

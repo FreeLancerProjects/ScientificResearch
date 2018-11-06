@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.semicolon.scientificresearch.Activities.CourseDetailsActivity;
 import com.semicolon.scientificresearch.Models.NotificationModel;
 import com.semicolon.scientificresearch.R;
 import com.semicolon.scientificresearch.databinding.NotificationRowBinding;
@@ -18,12 +17,10 @@ public class NotificationAdapter extends RecyclerView.Adapter <NotificationAdapt
 
     private List<NotificationModel> notificationModelList;
     private Context context;
-    private CourseDetailsActivity activity;
 
     public NotificationAdapter(List<NotificationModel> notificationModelList, Context context) {
         this.notificationModelList = notificationModelList;
         this.context = context;
-        this.activity = (CourseDetailsActivity) context;
     }
 
     @NonNull

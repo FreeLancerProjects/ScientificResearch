@@ -105,6 +105,8 @@
     <string name="logning_out">جار تسجيل الخروج...</string>
     <string name="wait">إنتظر قليلا...</string>
     <string name="ok2">حسنا</string>
+    <string name="transl">ترجمة</string>
+    <string name="citation">إقتباس</string>
 
 
     <array name="user_type">

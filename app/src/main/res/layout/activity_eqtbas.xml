@@ -59,7 +59,7 @@
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             android:textSize="17sp"
-                            android:text="@string/arbitration"
+                            android:text="@string/citation"
                             />
                     </RelativeLayout>
                 </android.support.v7.widget.Toolbar>

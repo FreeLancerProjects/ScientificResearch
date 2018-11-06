@@ -103,6 +103,8 @@
     <string name="logning_out">Logging out...</string>
     <string name="wait">Wait...</string>
     <string name="ok2">OK</string>
+    <string name="transl">Translation</string>
+    <string name="citation">citation</string>
 
     <array name="user_type">
         <item>statistical analyst</item>

@@ -132,6 +132,7 @@
                         app:buttonTint="@color/colorPrimary"
                         android:textSize="15sp"
                         android:text="@string/review_ref"
+                        android:onClick="@{event::onClickListener}"
 
                         />
                     <RadioButton
@@ -141,6 +142,7 @@
                         app:buttonTint="@color/colorPrimary"
                         android:textSize="15sp"
                         android:text="@string/wrt_ref"
+                        android:onClick="@{event::onClickListener}"
                         />
                 </RadioGroup>
                 <Button
