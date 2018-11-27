@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:singleLine="true"
             android:textStyle="bold"
             android:background="@drawable/lib_btn_bg"

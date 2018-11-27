@@ -55,7 +55,7 @@
                         android:layout_centerInParent="true"
                         android:textColor="@color/white"
                         android:textStyle="bold"
-                        android:textSize="17sp"
+                        android:textSize="20sp"
                         android:text="@string/morg_eq"
                         />
                 </RelativeLayout>
@@ -67,7 +67,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:textColor="@color/ko7ly"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:gravity="center"
             android:textStyle="bold"
             android:text="@string/morg_eq"
@@ -87,13 +87,12 @@
             <EditText
                 android:id="@+id/input"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="45dp"
                 android:background="@drawable/mo3dla_bg"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textColor="@color/ko7ly"
-                android:textSize="12sp"
+                android:textSize="18sp"
                 android:hint="@string/sample_size"
                 android:singleLine="true"
                 android:inputType="numberDecimal"
@@ -113,7 +112,7 @@
             android:paddingRight="5dp"
             android:gravity="center"
             android:textColor="@color/ko7ly"
-            android:textSize="12sp"
+            android:textSize="18sp"
 
             />
 
@@ -127,7 +126,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:text="@string/result"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:onClick="@{event::onClickListener}"
 
             />

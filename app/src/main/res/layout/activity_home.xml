@@ -126,7 +126,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp"
                         android:layout_gravity="center_horizontal"
-                        android:text="اكتب باعيننا"
+                        android:text="باحث"
                         android:textStyle="bold"
                         android:textSize="28sp"
                         android:textColor="@color/colorPrimary"
@@ -156,7 +156,7 @@
                                 android:paddingLeft="30dp"
                                 android:textStyle="bold"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
                                 />
                             <Button
                                 android:id="@+id/btn_db"
@@ -170,7 +170,7 @@
                                 android:gravity="center"
                                 android:paddingRight="35dp"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
 
 
                                 />
@@ -195,7 +195,7 @@
                                 android:paddingLeft="30dp"
                                 android:textStyle="bold"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
 
                                 />
                             <Button
@@ -210,7 +210,7 @@
                                 android:gravity="center"
                                 android:paddingRight="35dp"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
 
                                 />
                         </LinearLayout>
@@ -234,7 +234,7 @@
                                 android:paddingLeft="30dp"
                                 android:textStyle="bold"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
 
                                 />
                             <Button
@@ -249,7 +249,7 @@
                                 android:gravity="center"
                                 android:paddingRight="35dp"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
 
                                 />
                         </LinearLayout>
@@ -272,7 +272,7 @@
                                 android:paddingLeft="35dp"
                                 android:textStyle="bold"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
 
                                 />
                             <Button
@@ -287,7 +287,7 @@
                                 android:gravity="center"
                                 android:paddingRight="45dp"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
 
                                 />
 
@@ -312,7 +312,7 @@
                                 android:text="@string/serv"
                                 android:gravity="center"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
                                 android:background="@drawable/aena"
                                 android:paddingLeft="35dp"
 
@@ -326,7 +326,7 @@
                                 android:text="@string/quotation"
                                 android:textStyle="bold"
                                 android:onClick="@{event::onClickListener}"
-                                android:textSize="10sp"
+                                android:textSize="13sp"
                                 android:background="@drawable/database"
                                 android:paddingRight="40dp"
                                 />

@@ -88,7 +88,7 @@
                             android:layout_margin="5dp"
                             android:text="@{tranModel.course_name}"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="15sp"
+                            android:textSize="17sp"
                             android:textStyle="bold"
                             />
                         <ImageView
@@ -105,13 +105,14 @@
                             android:paddingRight="5dp"
                             android:paddingLeft="5dp"
                             android:layout_marginBottom="10dp"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
                             android:layout_marginTop="5dp"
                             />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:textSize="17sp"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
                             android:layout_marginBottom="10dp"
@@ -148,13 +149,13 @@
                             android:text="@string/acc_name"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
 
                             />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="13sp"
+                            android:textSize="17sp"
                             android:layout_marginRight="5dp"
                             android:textStyle="bold"
                             android:paddingLeft="5dp"
@@ -174,14 +175,14 @@
                             android:paddingRight="5dp"
                             android:text="@string/acc_id"
                             android:textStyle="bold"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
 
 
                             />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="13sp"
+                            android:textSize="17sp"
                             android:layout_marginRight="5dp"
                             android:textStyle="bold"
                             android:paddingLeft="5dp"
@@ -202,14 +203,14 @@
                             android:paddingRight="5dp"
                             android:text="@string/bank"
                             android:textStyle="bold"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
 
 
                             />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="13sp"
+                            android:textSize="17sp"
                             android:layout_marginRight="5dp"
                             android:textStyle="bold"
                             android:paddingLeft="5dp"
@@ -234,7 +235,7 @@
                             android:background="@drawable/btn_reserve"
                             android:text="@string/book"
                             android:textColor="@color/ko7ly"
-                            android:textSize="12sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:onClick="@{event::onClickListener}"
 
@@ -273,7 +274,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:textSize="17sp"
+                                android:textSize="20sp"
                                 android:textStyle="bold"
                                 android:text="@string/vid"
                                 android:textColor="@color/colorPrimary"

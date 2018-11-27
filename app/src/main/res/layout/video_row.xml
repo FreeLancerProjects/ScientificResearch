@@ -70,7 +70,7 @@
             android:layout_gravity="center_vertical"
             tools:ignore="RtlCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:gravity="center"
             android:clickable="false"
             android:longClickable="false"

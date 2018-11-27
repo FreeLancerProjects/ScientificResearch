@@ -58,7 +58,7 @@
                             android:layout_centerInParent="true"
                             android:textColor="@color/white"
                             android:textStyle="bold"
-                            android:textSize="17sp"
+                            android:textSize="20sp"
                             android:text="@string/doc"
                             />
                     </RelativeLayout>
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="80dp"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textColor="@color/black"
                     android:text="@string/ch_file"
                     android:gravity="center"
@@ -95,6 +95,7 @@
                     android:id="@+id/ch_file"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
+                    android:textSize="20sp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="40dp"
                     android:background="@drawable/lib_btn_bg"
@@ -130,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:buttonTint="@color/colorPrimary"
-                        android:textSize="15sp"
+                        android:textSize="18sp"
                         android:text="@string/review_ref"
                         android:onClick="@{event::onClickListener}"
 
@@ -140,7 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:buttonTint="@color/colorPrimary"
-                        android:textSize="15sp"
+                        android:textSize="18sp"
                         android:text="@string/wrt_ref"
                         android:onClick="@{event::onClickListener}"
                         />
@@ -152,7 +153,7 @@
                     android:background="@drawable/btn_bg"
                     android:layout_marginTop="70dp"
                     android:layout_gravity="center_horizontal"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:text="@string/upl"
