@@ -55,7 +55,7 @@
                         android:layout_centerInParent="true"
                         android:textColor="@color/white"
                         android:textStyle="bold"
-                        android:textSize="17sp"
+                        android:textSize="20sp"
                         android:text="قواعد البيانات"
                         />
                 </RelativeLayout>
