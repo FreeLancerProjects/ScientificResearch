@@ -81,9 +81,10 @@
         android:layout_marginRight="25dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"
+        android:paddingEnd="20dp"
         android:onClick="@{event::onClickListener}"
 
-        />
+        tools:ignore="RtlCompat" />
     <Button
         android:id="@+id/paidTransBtn"
         android:layout_width="match_parent"
