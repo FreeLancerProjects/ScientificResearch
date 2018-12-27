@@ -97,7 +97,7 @@
     <string name="ch_file_type">إختر نوع الملف</string>
     <string name="review_plan_research">مراجعة خطة البحث</string>
     <string name="rev_ent_search">مراجعة البحث كاملا</string>
-    <string name="research_consulting">إستشارات بحثة</string>
+    <string name="research_consulting">استشارات بحثية</string>
     <string name="format_search">تنسيق البحث</string>
     <string name="plz_inst_wa">قم بتحميل تطبيق الواتس اب اولا</string>
     <string name="something">خطأ حاول مرة اخرى لا حقا</string>
@@ -109,6 +109,13 @@
     <string name="citation">إقتباس</string>
     <string name="mail_not_reg">هذا البريد لم يسجل به من قبل</string>
     <string name="ch_xls_file">قم بتحميل ملف بصيغة إكسل</string>
+    <string name="libs">مكتبات</string>
+    <string name="references">طلب مراجع</string>
+    <string name="search_title">عنوان البحث</string>
+    <string name="search_details">نبذة عن البحث</string>
+    <string name="send">إرسال</string>
+    <string name="field_required">هذا الحقل مطلوب</string>
+    <string name="Choose_language_search">إختر لغة البحث</string>
 
 
     <array name="user_type">
@@ -126,6 +133,14 @@
         <item>استاذ</item>
         <item>استاذ مساعد</item>
         <item>استاذ مشارك</item>
+
+    </array>
+
+    <array name="lang">
+        <item>إختر لغة البحث</item>
+        <item>عربي</item>
+        <item>English</item>
+
 
     </array>
 </resources>

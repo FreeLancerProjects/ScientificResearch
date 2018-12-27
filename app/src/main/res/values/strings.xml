@@ -107,6 +107,13 @@
     <string name="citation">citation</string>
     <string name="mail_not_reg">Your email is not registered</string>
     <string name="ch_xls_file">Choose excel file</string>
+    <string name="libs">Libraries</string>
+    <string name="references">References</string>
+    <string name="search_title">Search title</string>
+    <string name="search_details">Search details</string>
+    <string name="send">Send</string>
+    <string name="field_required">Field required</string>
+    <string name="Choose_language_search">Choose language search</string>
 
     <array name="user_type">
         <item>statistical analyst</item>
@@ -123,6 +130,15 @@
         <item>professor</item>
         <item>assistant professor</item>
         <item>Co-professor</item>
+
+    </array>
+
+    <array name="lang">
+        <item>Choose language</item>
+
+        <item>عربي</item>
+        <item>English</item>
+
 
     </array>
 </resources>

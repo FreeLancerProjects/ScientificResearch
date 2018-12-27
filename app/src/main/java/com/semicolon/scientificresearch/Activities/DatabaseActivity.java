@@ -57,7 +57,7 @@ public class DatabaseActivity extends AppCompatActivity implements Events{
         int id = view.getId();
         switch (id)
         {
-            case R.id.prev:
+            /*case R.id.prev:
                 Intent intent1 = new Intent(this,OtherWebViewActivity.class);
                 intent1.putExtra("url","http://ecat.kfnl.gov.sa:88/hipmain/");
                 startActivity(intent1);
@@ -72,7 +72,13 @@ public class DatabaseActivity extends AppCompatActivity implements Events{
                 Intent intent3 = new Intent(this,OtherWebViewActivity.class);
                 intent3.putExtra("url","https://uqu.edu.sa/lib");
                 startActivity(intent3);
+                break;*/
+            case R.id.btn_reference:
+                Intent intent3 = new Intent(this,ReferencesActivity.class);
+                intent3.putExtra("user_type",user_type);
+                startActivity(intent3);
                 break;
+
             case R.id.back:
                 finish();
                 break;

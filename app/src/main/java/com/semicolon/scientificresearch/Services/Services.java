@@ -96,4 +96,11 @@ public interface Services {
     @POST("Api/RestMyPass")
     Call<ResponseModel> resetPassword(@Field("user_email") String user_email);
 
+    @FormUrlEncoded
+    @POST("Api/askForReference")
+    Call<ResponseModel> ask_references(@Field("user_id") String user_id,
+                                       @Field("reference_title") String reference_title,
+                                       @Field("reference_content") String reference_content,
+                                       @Field("reference_type") String reference_type
+                                       );
 }
